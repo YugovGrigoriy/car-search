@@ -1,0 +1,41 @@
+body {
+    background-image: url("../image/q-log.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.button-style {
+    display: inline-block;
+    padding: 15px 25px;
+    font-size: 24px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: #e8e8e8;
+    background-color: rgba(172, 182, 183, 0.36);
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px rgba(153, 153, 153, 0.22);
+    position: absolute;
+    font-family: 'segoe ui', sans-serif;
+}
+
+.button-style:hover {
+    background-color: rgba(168, 175, 169, 0.55);
+}
+
+.button-style:active {
+    background-color: #a7b0b0;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}
+
+.button-sign-up {
+    top: 270px;
+    left: 400px;
+}
+
+.button-sign-in {
+    top: 270px;
+    left: 1480px;
+}

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/styles/styles-signUpIn.css">
+    <title>Personal account</title>
+</head>
+<body>
+<div class="login-container">
+    <h3>Fill in your information</h3>
+    <form th:action="@{/personal-area}" method="post">
+        <input type="hidden" name="username" th:value="${username}"/>
+        <label>
+          Name:  <input type="text" name="name" class="form-input" placeholder="your name" required>
+        </label>
+        <label>
+          Age:  <input type="number" name="age" class="form-input" placeholder="your age" required>
+        </label>
+        <button type="submit" class="submit-button">go to personal-area</button>
+    </form>
+    </div>
+</body>
+</html>
