@@ -7,18 +7,19 @@
     <title>personal-area</title>
 </head>
 <body>
-<h1>User Information</h1>
-<form>
 
+<header>
+    <h1>Your profile</h1>
+</header>
+<a href="/"><div class="home"></div></a>
+<section class="profile-info">
 
-        Name: <span th:text="${name}"></span>
+    Name: <span th:text="${name}"></span><br>
+    Age: <span th:text="${age}"></span>
+</section>
 
-
-
-        Age: <span th:text="${age}"></span>
-
-
-
-</form>
+<footer>
+    <p>&copy; 2024 Car-Engine</p>
+</footer>
 </body>
 </html>

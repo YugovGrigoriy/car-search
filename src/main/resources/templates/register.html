@@ -8,8 +8,8 @@
 </head>
 <body>
 <div class="login-container">
-    <h2 th:text="${registrationFailed}">Sign Up</h2>
-    <form th:action="@{/registration}" method="post">
+    <h2 th:text="${registrationFailed} ?: 'Sign Up'">Sign Up</h2>
+    <form th:action="@{api/create}" method="post">
 
 
         <label>

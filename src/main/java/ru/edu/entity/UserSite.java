@@ -9,6 +9,9 @@ public class UserSite {
     //todo вернуть id
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @Column(unique = true, nullable = false)
     private String username;
     @Column(nullable = false)
@@ -63,5 +66,13 @@ public class UserSite {
 
     public int getAge() {
         return age;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }

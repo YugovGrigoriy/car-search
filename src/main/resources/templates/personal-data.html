@@ -9,7 +9,7 @@
 <body>
 <div class="login-container">
     <h3>Fill in your information</h3>
-    <form th:action="@{/personal-area}" method="post">
+    <form th:action="@{/api/user/me}" method="post">
         <input type="hidden" name="username" th:value="${username}"/>
         <label>
           Name:  <input type="text" name="name" class="form-input" placeholder="your name" required>

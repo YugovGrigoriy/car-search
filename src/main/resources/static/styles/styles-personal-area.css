@@ -1,33 +1,55 @@
 body {
     font-family: Arial, sans-serif;
-    padding: 20px;
-}
-
-h1 {
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
     text-align: center;
 }
 
-.form-group {
-    margin-bottom: 10px;
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
 }
 
-label {
-    display: block;
+.profile-info {
+    font-family: Arial, sans-serif;
+    color: #333;
+    background-color: #ffffff;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin-top: 20px;
 }
 
-input {
-    padding: 5px;
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    position: absolute;
+    bottom: 0;
     width: 100%;
 }
-
-button {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    cursor: pointer;
+.home {
+    top: 40px;
+    left: 1850px;
+    position: fixed;
+    height: 10px; width: 5px;
+    border: 14px solid #faf7f7; border-bottom: none;
+}
+.home:before {
+    content: "";
+    position: absolute; top: -30px;
+    right: -26px;
+    border-style: solid; border-width: 0 30px 20px; border-color: rgba(0,0,0,0) rgba(0,0,0,0) #f5f4f4;
+}
+.home:after {
+    content: "";
+    position: absolute; top: -30px; left: 13px;
+    height: 10px;
+    border: 4px solid #faf9f9;
 }
