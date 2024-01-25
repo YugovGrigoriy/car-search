@@ -1,10 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>engine</title>
+    <title>search</title>
+    <link rel="stylesheet" type="text/css" href="/styles/engine.css">
 </head>
 <body>
-ok
+<header>
+
+    <div style="text-align: center;"><h1><a class="link" href="/help">&#10068;</a>search</h1></div>
+    <form action="engine/me" method="get"><button id="home-button">profile</button></form>
+
+</header>
+<div class="search-container">
+    Example: Ford Focus  <label for="search-input"></label><input type="text" id="search-input" placeholder="At the moment, search is possible only for Ford cars">
+    <button id="search-button">Find</button>
+</div>
+<div id="search-results">
+
+</div>
+<footer>
+    <p>&copy; 2024 Car-Engine</p>
+</footer>
 </body>
 </html>

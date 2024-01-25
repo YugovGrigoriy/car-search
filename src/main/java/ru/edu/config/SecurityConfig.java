@@ -25,64 +25,34 @@ public class SecurityConfig {
         this.userDetailsService = userDetailsService;
     }
 
-    // todo: почитать и понять
-    /*
-    public SecurityFilterChain filterChain1(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests((auth) -> auth
-                .requestMatchers(
-                    "/",
-                    "/car-search-engine",
-                    "/car-search",
-                    "/register",
-                    "/registration",
-                    "/personal-area"
-                )
-                .permitAll()
-                .requestMatchers("/main/*").authenticated()
-            );
-
-        http.formLogin((form) -> form
-            .loginPage("/login")
-            .defaultSuccessUrl("/main/engine", true)
-            .permitAll()
-        );
-
-        http.logout((logout) -> logout
-            .logoutSuccessUrl("/")
-            .permitAll()
-        );
-
-        return http.build();
-    }
-
-     */
-
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests((auth) -> auth
                 .requestMatchers(
+
                     "/",
-                    "/car-search-engine",
-                    "/car-search",
+                    "/api/**",
                     "/register",
-                    "/registration",
-                    "/personal-area"
+                    "/create/account",
+                    "/help"
 
 
                 ).permitAll()
 
-                .requestMatchers("/main/*").authenticated()
+                .requestMatchers(
+                    "/engine",
+                    "/engine/*"
+                ).authenticated()
             )
 
             .formLogin((form) -> form
                 .loginPage("/login")
-                .defaultSuccessUrl("/main/engine", true)
+                .defaultSuccessUrl("/", true)
                 .permitAll()
             )
 
             .logout((logout) -> logout
-                .logoutSuccessUrl("/")
+                .logoutSuccessUrl("/logout")
                 .permitAll()
             )
 
@@ -90,6 +60,7 @@ public class SecurityConfig {
 
         return http.build();
     }
+
     //todo подумать над шифрованием
     @Bean
     public PasswordEncoder passwordEncoder() {
