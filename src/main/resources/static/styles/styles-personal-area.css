@@ -3,7 +3,6 @@ body {
     background-color: #f4f4f4;
     margin: 0;
     padding: 0;
-    text-align: center;
 }
 
 header {
@@ -11,6 +10,18 @@ header {
     color: #fff;
     padding: 20px;
     text-align: center;
+}
+
+h1 {
+    margin: 0;
+}
+
+.profile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 20px;
 }
 
 .profile-info {
@@ -22,7 +33,8 @@ header {
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;
-    margin-top: 20px;
+    max-width: 500px;
+    margin-bottom: 20px;
 }
 
 footer {
@@ -34,22 +46,20 @@ footer {
     bottom: 0;
     width: 100%;
 }
+
 .home {
-    top: 40px;
-    left: 1850px;
-    position: fixed;
-    height: 10px; width: 5px;
-    border: 14px solid #faf7f7; border-bottom: none;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 30px;
+    height: 30px;
+    background-image: url("../image/home-icon.png");
+    background-size: cover;
+    border-radius: 50%;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+    transition: transform 0.3s ease-in-out;
 }
-.home:before {
-    content: "";
-    position: absolute; top: -30px;
-    right: -26px;
-    border-style: solid; border-width: 0 30px 20px; border-color: rgba(0,0,0,0) rgba(0,0,0,0) #f5f4f4;
-}
-.home:after {
-    content: "";
-    position: absolute; top: -30px; left: 13px;
-    height: 10px;
-    border: 4px solid #faf9f9;
+
+.home:hover {
+    transform: scale(1.1);
 }

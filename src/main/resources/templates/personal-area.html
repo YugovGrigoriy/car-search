@@ -9,15 +9,17 @@
 <body>
 
 <header>
-    <h1>Your profile</h1>
+    <h1>Your Profile</h1>
 </header>
-<a href="/"><div class="home"></div></a>
-<section class="profile-info">
-
-    Name: <span th:text="${name}"></span><br>
-    Age: <span th:text="${age}"></span>
+<a href="/">
+    <div class="home"></div>
+</a>
+<section class="profile">
+    <div class="profile-info">
+        <p>Name: <span th:text="${name}"></span></p>
+        <p>Age: <span th:text="${age}"></span></p>
+    </div>
 </section>
-
 <footer>
     <p>&copy; 2024 Car-Engine</p>
 </footer>

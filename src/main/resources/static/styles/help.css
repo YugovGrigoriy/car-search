@@ -1,0 +1,31 @@
+body { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; background-color: bisque; }
+
+.container { max-width: 600px; padding: 20px; text-align: center; }
+
+h1 { margin-bottom: 20px; }
+
+p { margin-bottom: 10px; }
+
+ol { margin-bottom: 20px; }
+
+ol li { margin-bottom: 5px; }
+
+a { color: blue; text-decoration: none; }
+
+a:hover { text-decoration: underline; }
+.button {
+    background-color: #7a7979;
+    border: none;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 50%;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+}
