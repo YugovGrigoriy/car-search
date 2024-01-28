@@ -7,19 +7,45 @@
 <body>
 <header>
 
-    <div style="text-align: center;"><h1><a class="link" href="/help">&#10068;</a>search</h1></div>
-    <form action="engine/me" method="get"><button id="home-button">profile</button></form>
+    <div style="text-align: center;"><h1><a class="link" href="/helpEU">&#10068;</a>search</h1></div>
+    <form action="/engine/me" method="get">
+        <button id="home-button"></button>
+    </form>
 
 </header>
-<div class="search-container">
-    Example: Ford Focus  <label for="search-input"></label><input type="text" id="search-input" placeholder="At the moment, search is possible only for Ford cars">
-    <button id="search-button">Find</button>
+<div class="image-container-ford" th:if="${img != null}">
+    <img src="/image/ford.png" alt="">
 </div>
-<div id="search-results">
+<form th:action="@{/car/find}" method="get">
+    <div class="search-container">
 
+        Example: Ford Focus <label for="search-input"></label><input type="text" id="search-input" name="model"
+                                                                     placeholder="At the moment, search is possible only for Ford cars">
+        Сar generation<label for="search-input2"></label><input type="text" id="search-input2" name="vehicleGeneration"
+                                                                placeholder="Example: 1">
+        <button id="search-button">Find</button>
+    </div>
+</form>
+
+<div id="search-results">
+    <div class="image-container" th:if="${img != null}">
+        <img th:src="${img}" alt="">
+
+    </div>
+    <div id="custom-text">
+
+        <p><span th:text="${model}"></span></p>
+        <p><span th:text="${newVehicleGeneration}"></span></p>
+        <p><span th:text="${price}"></span></p>
+        <p><span th:text="${power}"></span></p>
+        <p><span th:text="${engineCapacity}"></span></p>
+        <p><span th:text="${maximumSpeed}"></span></p>
+        <p><span th:text="${fullMass}"></span></p>
+        <p><span th:text="${carClass}"></span></p>
+    </div>
 </div>
-<footer>
-    <p>&copy; 2024 Car-Engine</p>
-</footer>
+    <footer>
+       <p>&copy; 2024 Car-Engine</p>
+    </footer>
 </body>
 </html>

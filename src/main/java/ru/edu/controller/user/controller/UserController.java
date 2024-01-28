@@ -61,5 +61,9 @@ public class UserController {
     public String help() {
         return "help";
     }
+    @GetMapping("/helpEU")
+    public String helpEU() {
+        return "helpEU";
+    }
 
 }

@@ -34,14 +34,16 @@ public class SecurityConfig {
                     "/api/**",
                     "/register",
                     "/create/account",
-                    "/help"
+                    "/help",
+                    "/helpEU"
 
 
                 ).permitAll()
 
                 .requestMatchers(
                     "/engine",
-                    "/engine/*"
+                    "/engine/*",
+                    "/car/*"
                 ).authenticated()
             )
 
@@ -61,7 +63,7 @@ public class SecurityConfig {
         return http.build();
     }
 
-    //todo подумать над шифрованием
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
