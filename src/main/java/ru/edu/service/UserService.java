@@ -45,7 +45,7 @@ public class UserService implements UserDetailsService {
         }
         try {
             user.setUsername(user.getUsername());
-            user.setPassword(user.getPassword());
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
             userRepository.save(user);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -56,8 +56,6 @@ public class UserService implements UserDetailsService {
     public void updateUser(UserSite user) {
         //todo проверку на корректность возраста и имени
         try {
-            user.setUsername(user.getUsername());
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
             userRepository.save(user);
         } catch (Exception e) {
 

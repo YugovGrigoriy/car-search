@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 public class CarEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
     private Long id;
     @Column
     private String brand;
