@@ -43,7 +43,8 @@ public class SecurityConfig {
                 .requestMatchers(
                     "/engine",
                     "/engine/*",
-                    "/car/*"
+                    "/car/*",
+                    "/api/car/**"
                 ).authenticated()
             )
 

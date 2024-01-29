@@ -133,3 +133,12 @@ footer {
     font-family: Arial, sans-serif;
     font-weight: bold;
 }
+#favorite-button {
+    width: 40px;
+    height: 40px;
+    background-image: url("../image/favorite.png");
+    background-size: cover;
+    border-radius: 50%;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+    transition: transform 0.3s ease-in-out;
+}

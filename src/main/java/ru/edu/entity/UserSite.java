@@ -25,8 +25,30 @@ public class UserSite {
 
     @Column(nullable = false)
     private String role = "USER";
+    @Column
+    private String favoriteCar1;
+    @Column
+    private String favoriteCar2;
 
+    public String getFavoriteCar2() {
+        return favoriteCar2;
+    }
 
+    public void setFavoriteCar2(String favoriteCar2) {
+        this.favoriteCar2 = favoriteCar2;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getFavoriteCar1() {
+        return favoriteCar1;
+    }
+
+    public void setFavoriteCar1(String favoriteCar) {
+        this.favoriteCar1 = favoriteCar;
+    }
 
     public String getUsername() {
         return username;

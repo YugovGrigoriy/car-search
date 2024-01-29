@@ -28,6 +28,7 @@
 </form>
 
 <div id="search-results">
+    <span th:text="${error}"></span>
     <div class="image-container" th:if="${img != null}">
         <img th:src="${img}" alt="">
 
@@ -42,6 +43,10 @@
         <p><span th:text="${maximumSpeed}"></span></p>
         <p><span th:text="${fullMass}"></span></p>
         <p><span th:text="${carClass}"></span></p>
+        <form th:action="@{/api/car/add/favorite}" method="post" th:if="${idCar != null}">
+            <input type="hidden" name="idCar" th:value="${idCar}" />
+            <button id="favorite-button"></button>
+        </form>
     </div>
 </div>
     <footer>

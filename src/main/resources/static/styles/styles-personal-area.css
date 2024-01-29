@@ -63,3 +63,26 @@ footer {
 .home:hover {
     transform: scale(1.1);
 }
+.favorite-positions {
+    border: 1px solid #ddd;
+    padding: 10px;
+    background-color: #f4f4f4;
+
+}
+
+.favorite-positions h2 {
+    margin-top: 0;
+    font-size: 24px;
+    color: #333;
+}
+
+.favorite-positions ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.favorite-positions li {
+    margin-bottom: 8px;
+    font-size: 16px;
+    color: #2a2a2a;
+}
