@@ -60,7 +60,7 @@ h1 {
     padding: 20px;
     border: 1px solid #ffffff;
     border-radius: 5px;
-    background-color: #e8e8e8;
+
 }
 
 footer {
@@ -141,4 +141,24 @@ footer {
     border-radius: 50%;
     box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
     transition: transform 0.3s ease-in-out;
+}
+.report-error-container {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+}
+
+.report-error-button {
+    padding: 10px;
+    font-size: 14px;
+    color: #fff;
+    background-color: #818181; /* Цвет фона кнопки */
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.report-error-button:hover {
+    background-color: #c9302c; /* Цвет фона кнопки при наведении */
 }

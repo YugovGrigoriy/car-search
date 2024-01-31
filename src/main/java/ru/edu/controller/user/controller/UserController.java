@@ -3,6 +3,7 @@ package ru.edu.controller.user.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -53,14 +54,7 @@ public class UserController {
         return "personal-data";
     }
 
-    @GetMapping("/logout")
-    public String logout() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null) {
-            SecurityContextHolder.clearContext();
-        }
-        return "/login";
-    }
+
 
     @GetMapping(value = "/engine/me")
     public String personalArea(Model model) {
@@ -80,6 +74,10 @@ public class UserController {
         model.addAttribute("position1", favoriteCar1);
         model.addAttribute("position2", favoriteCar2);
         return "personal-area";
+    }
+    @GetMapping(value = "/report")
+    public String report(){
+        return"user-message";
     }
 
     @GetMapping("/help")

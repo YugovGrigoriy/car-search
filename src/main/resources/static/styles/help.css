@@ -1,23 +1,64 @@
-body { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; background-color: bisque; }
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #fffcf8;
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+}
 
-.container { max-width: 600px; padding: 20px; text-align: center; }
+.container {
+    max-width: 600px;
+    padding: 20px;
+    text-align: center;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
 
-h1 { margin-bottom: 20px; }
+.container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+}
 
-p { margin-bottom: 10px; }
+h1 {
+    margin-bottom: 20px;
+    color: #333;
+}
 
-ol { margin-bottom: 20px; }
+p {
+    margin-bottom: 10px;
+    color: #555;
+}
 
-ol li { margin-bottom: 5px; }
+ol {
+    margin-bottom: 20px;
+}
 
-a { color: blue; text-decoration: none; }
+ol li {
+    margin-bottom: 5px;
+    color: #555;
+}
 
-a:hover { text-decoration: underline; }
+a {
+    color: #3498db;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #2980b9;
+    text-decoration: underline;
+}
+
 .button {
-    background-color: #7a7979;
+    background-color: #3498db;
     border: none;
     color: white;
-    padding: 20px;
+    padding: 15px 30px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -28,4 +69,9 @@ a:hover { text-decoration: underline; }
     position: fixed;
     top: 20px;
     right: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: #2980b9;
 }
