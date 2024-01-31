@@ -1,7 +1,9 @@
 package ru.edu.utils;
 
 public class ToRomanNumerals {
-
+    /**
+     *Converting Arabic numerals to Roman numerals
+     */
     public static String toRoman(int number){
         String[] thousands = {"", "M", "MM", "MMM"};
         String[] hundreds = {"", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM"};

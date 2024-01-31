@@ -2,6 +2,8 @@ package ru.edu.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -10,6 +12,8 @@ import org.springframework.stereotype.Service;
 import ru.edu.entity.UserSite;
 import ru.edu.repo.UserRepository;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 
 @Service
@@ -30,13 +34,15 @@ public class UserService implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException(username);
         }
+        Collection<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority("ROLE_" + user.getRole()));
         return new org.springframework.security.core.userdetails.User(
             user.getUsername(),
             user.getPassword(),
-            Collections.emptyList()
-
-        );
+            authorities
+         );
     }
+
 
     public boolean saveUser(UserSite user) {
         UserSite newUser = userRepository.findByUsername(user.getUsername());

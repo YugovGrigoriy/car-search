@@ -31,21 +31,19 @@ public class SecurityConfig {
                 .requestMatchers(
 
                     "/",
-                    "/api/**",
+                    "/api/create",
                     "/register",
                     "/create/account",
                     "/help",
-                    "/helpEU"
+                    "/helpEU",
+                    "/report",
+                    "/api/report",
+                    "/api/user/me"
 
 
                 ).permitAll()
+                .anyRequest().hasAnyRole("USER","ADMIN")
 
-                .requestMatchers(
-                    "/engine",
-                    "/engine/*",
-                    "/car/*",
-                    "/api/car/**"
-                ).authenticated()
             )
 
             .formLogin((form) -> form

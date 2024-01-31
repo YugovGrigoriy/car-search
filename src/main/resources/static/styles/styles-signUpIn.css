@@ -1,6 +1,6 @@
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #37a27f;
+    background-color: #9d9d9d;
     margin: 0;
     padding: 0;
     display: flex;
@@ -12,52 +12,66 @@ body {
 .login-container {
     background-color: #fff;
     padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 15px; /* Увеличил радиус для более выразительных углов */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
     text-align: center;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.login-container:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 }
 
 .login-container h2 {
     margin-bottom: 20px;
     color: #333;
+    font-size: 24px; /* Увеличил размер заголовка */
 }
 
 .form-input {
     width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+    padding: 18px; /* Увеличил отступы для более комфортного ввода */
+    margin-bottom: 25px; /* Увеличил отступ для лучшей разделения элементов формы */
+    border: 2px solid #ddd; /* Увеличил толщину границы для более явной раздельности */
+    border-radius: 10px; /* Увеличил радиус для более круглых углов */
     box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+.form-input:focus {
+    border-color: #696969;
 }
 
 .submit-button {
     width: 100%;
-    padding: 10px;
+    padding: 18px;
     border: none;
-    background-color: #5c6bc0;
+    background-color: #7b7b7c;
     color: #ffffff;
     text-transform: uppercase;
-    border-radius: 5px;
+    border-radius: 10px;
     cursor: pointer;
     transition: background-color 0.3s;
 }
 
 .submit-button:hover {
-    background-color: #3949ab;
+    background-color: #676767;
 }
 
 .form-footer {
-    margin-top: 20px;
+    margin-top: 25px;
     font-size: 0.9em;
     color: #666;
 }
 
 .form-footer a {
-    color: #5c6bc0;
+    color: #565656;
     text-decoration: none;
+    transition: color 0.3s ease;
 }
 
 .form-footer a:hover {
+    color: #525252;
     text-decoration: none;
 }

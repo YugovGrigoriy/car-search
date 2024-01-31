@@ -16,12 +16,23 @@
 </a>
 <section class="profile">
     <div class="profile-info">
-        <p>Name: <span th:text="${name}"></span></p>
-        <p>Age: <span th:text="${age}"></span></p>
-     </div>
-
+        <div class="user-info">
+            <h2>Name</h2>
+            <p th:text="${name}"></p>
+        </div>
+        <div class="user-info">
+            <h2>Age</h2>
+            <p th:text="${age}"></p>
+         </div>
+        <form th:action="@{/api/logout}" method="get">
+            <input type="submit" value="logout">
+        </form>
+    </div>
+</section>
+    <div class="favorite-positions">
     Car comparison:
     Add two cars using the special button next to the search result and click “compare”.
+    </div>
     <div class="favorite-positions" th:if="${position1 != null}">
         <h2>favorite positions</h2>
         <ul>
@@ -41,7 +52,7 @@
             <button>ok</button>
         </form>
     </div>
-</section>
+
 <footer>
     <p>&copy; 2024 Car-Engine</p>
 </footer>
