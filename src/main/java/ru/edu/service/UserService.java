@@ -14,7 +14,8 @@ import ru.edu.repo.UserRepository;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
+import java.util.List;
+
 
 @Service
 public class UserService implements UserDetailsService {
@@ -40,7 +41,7 @@ public class UserService implements UserDetailsService {
             user.getUsername(),
             user.getPassword(),
             authorities
-         );
+        );
     }
 
 
@@ -71,6 +72,19 @@ public class UserService implements UserDetailsService {
 
     public UserSite findByUsername(String username) {
         return userRepository.findByUsername(username);
+    }
+    public UserSite findById(long id){return userRepository.findById(id);}
+
+    public List<UserSite> findAllUserByRoleUser() {
+        return userRepository.findByRole("USER");
+    }
+    public List<UserSite> findAllUserByRoleBlocked() {
+        return userRepository.findByRole("BLOCKED");
+    }
+    public void changeRole(String newRole,long id){
+        UserSite user=findById(id);
+        user.setRole(newRole);
+        updateUser(user);
     }
 
     public String generateLogin(String login) {

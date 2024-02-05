@@ -6,11 +6,11 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "registered-users")
 public class UserSite {
-    //todo вернуть id
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @Column(unique = true, nullable = false)
     private String username;
@@ -96,5 +96,16 @@ public class UserSite {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "UserSite{" +
+            "id=" + id +
+            ", username='" + username + '\'' +
+            ", name='" + name + '\'' +
+            ", age=" + age +
+            ", role='" + role + '\'' +
+            '}';
     }
 }

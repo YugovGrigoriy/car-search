@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/admin-styles.css">
+    <title>blocked-user</title>
+</head>
+<body>
+<div class="login-container">
+    <form th:action="@{/admin/api/add-user/blockList}" method="post">
+        <label>
+            ID User:
+            <input type="number" name="ID" required>
+            <button class="admin-button admin-button-block">Block</button>
+        </label>
+    </form>
+    <form th:action="@{/admin/api/add-user/unBlock}" method="post">
+    <label>
+        ID User:
+        <input type="number" name="ID" required>
+        <button class="admin-button admin-button-unblock">Unblock</button>
+    </label>
+    </form>
+    <div id="user-list-container">
+
+        <ul th:each="user : ${userList}">
+            <li th:text="${user}"></li>
+        </ul>
+    </div>
+
+</div>
+</body>
+</html>
