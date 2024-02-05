@@ -31,7 +31,7 @@ public class CarController {
     public String findCar(Model model,
                           @RequestParam("model") String carModel,
                           @RequestParam("vehicleGeneration") String vehicleGeneration) {
-        if (carModel.isEmpty() || vehicleGeneration.isEmpty()) {
+       if (carModel.isEmpty() || vehicleGeneration.isEmpty()) {
             model.addAttribute("error", "Error: Car model and generation are required");
             return "engine";
         }

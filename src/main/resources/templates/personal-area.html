@@ -10,6 +10,9 @@
 
 <header>
     <h1>Your Profile</h1>
+    <form th:action="@{/admin/admin-dashboard}" method="get" th:if="${userRole == 'ADMIN'}">
+        <button class="styled-button">Admin Dashboard</button>
+    </form>
 </header>
 <a href="/">
     <div class="home"></div>
@@ -23,36 +26,35 @@
         <div class="user-info">
             <h2>Age</h2>
             <p th:text="${age}"></p>
-         </div>
+        </div>
         <form th:action="@{/api/logout}" method="get">
-            <input type="submit" value="logout">
+            <button class="logout-button">Logout</button>
         </form>
     </div>
 </section>
-    <div class="favorite-positions">
-    Car comparison:
-    Add two cars using the special button next to the search result and click “compare”.
-    </div>
-    <div class="favorite-positions" th:if="${position1 != null}">
-        <h2>favorite positions</h2>
-        <ul>
-            <li th:text="${position1}"></li>
-            <li th:text="${position2}"></li>
-        </ul>
-        <form th:action="@{/api/car/clear}" method="post">
-            <button>clear</button>
-        </form>
-        <form th:action="@{/car/compare}" method="get" th:if="${position1 != null&&position2!=null}">
-            <button>compare</button>
-        </form>
-    </div>
-    <div class="favorite-positions" th:if="${resultCompareCar != null}">
-        <div th:utext="${resultCompareCar}"></div>
-        <form th:action="@{/engine/me}" method="get">
-            <button>ok</button>
-        </form>
-    </div>
-
+<div class="favorite-positions">
+    <p>Car comparison:</p>
+    <p>Add two cars using the special button next to the search result and click "Compare".</p>
+</div>
+<div class="favorite-positions" th:if="${position1 != null}">
+    <h2>Favorite Positions</h2>
+    <ul>
+        <li th:text="${position1}"></li>
+        <li th:text="${position2}"></li>
+    </ul>
+    <form th:action="@{/api/car/clear}" method="post">
+        <button>Clear</button>
+    </form>
+    <form th:action="@{/car/compare}" method="get" th:if="${position1 != null && position2 != null}">
+        <button>Compare</button>
+    </form>
+</div>
+<div class="favorite-positions" th:if="${resultCompareCar != null}">
+    <div th:utext="${resultCompareCar}"></div>
+    <form th:action="@{/engine/me}" method="get">
+        <button>OK</button>
+    </form>
+</div>
 <footer>
     <p>&copy; 2024 Car-Engine</p>
 </footer>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/admin-styles.css">
+    <title>Admin Dashboard</title>
+</head>
+<body>
+<header class="admin-header">
+    <h1>Admin Dashboard</h1>
+</header>
+<div class="admin-container">
+    <form th:action="@{/admin/blocked-user}" method="get">
+    <button class="admin-button admin-button-block">Block user</button>
+    </form>
+    <button class="admin-button admin-button-info">Change vehicle information</button>
+    <form th:action="@{/admin/user-report}" method="get">
+    <button class="admin-button admin-button-complaints">View user complaints</button>
+    </form>
+    <button class="admin-button admin-button-info">find car id</button>
+    <div id="user-list-container">
+
+        <ul th:each="user : ${userList}">
+            <li th:text="${user}"></li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>
