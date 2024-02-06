@@ -1,7 +1,6 @@
 package ru.edu.controller.car.controller;
 
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,11 +13,10 @@ import ru.edu.entity.CarEntity;
 import ru.edu.entity.UserSite;
 import ru.edu.service.CarService;
 import ru.edu.service.UserService;
+import ru.edu.utils.CompareCar;
+import ru.edu.utils.StringFormatter;
 
 
-
-
-import static ru.edu.utils.CompareCar.compareCar;
 import static ru.edu.utils.ToRomanNumerals.toRoman;
 
 @Controller
@@ -31,7 +29,7 @@ public class CarController {
     public String findCar(Model model,
                           @RequestParam("model") String carModel,
                           @RequestParam("vehicleGeneration") String vehicleGeneration) {
-       if (carModel.isEmpty() || vehicleGeneration.isEmpty()) {
+        if (carModel.isEmpty() || vehicleGeneration.isEmpty()) {
             model.addAttribute("error", "Error: Car model and generation are required");
             return "engine";
         }
@@ -42,9 +40,9 @@ public class CarController {
                 " perhaps you were mistaken or we have not yet managed to add this car");
             return "engine";
         }
-        String brand = car.getBrand();
-        brand = Character.toUpperCase(brand.charAt(0)) + brand.substring(1);
-        String carModel1 = Character.toUpperCase(carModel.charAt(0)) + carModel.substring(1);
+        String brand = StringFormatter.capitalizeFirstLetter(car.getBrand());
+
+        carModel = StringFormatter.capitalizeFirstLetter(car.getModel());
         String newVehicleGeneration = "Car vehicle generation: " + toRoman(Integer.parseInt(car.getVehicleGeneration()));
         String price = "Price: " + car.getPrice() + "$";
         String power = "Car power: " + car.getPower() + " hp";
@@ -53,7 +51,7 @@ public class CarController {
         String fullMass = "Full mass: " + car.getFullMass() + " kg";
         String carClass = "Class car: " + car.getCarClass();
         model.addAttribute("idCar", car.getId());
-        model.addAttribute("model", brand + " " + carModel1);
+        model.addAttribute("model", brand + " " + carModel);
         model.addAttribute("newVehicleGeneration", newVehicleGeneration);
         model.addAttribute("price", price);
         model.addAttribute("power", power);
@@ -74,9 +72,10 @@ public class CarController {
         CarEntity car2 = carService.findCar(user.getFavoriteCar2());
         model.addAttribute("name", user.getName());
         model.addAttribute("age", user.getAge());
-        model.addAttribute("resultCompareCar",compareCar(car1,car2));
+        model.addAttribute("resultCompareCar", CompareCar.buildCompareResult(car1, car2));
         return "personal-area";
     }
+
 
     @Autowired
     public void setCarService(CarService carService) {

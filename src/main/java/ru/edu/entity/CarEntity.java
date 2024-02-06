@@ -118,4 +118,21 @@ public class CarEntity {
     public void setCarClass(String car_class) {
         this.carClass = car_class;
     }
+
+    @Override
+    public String toString() {
+        return "CarEntity{" +
+            "id=" + id +
+            ", brand='" + brand + '\'' +
+            ", model='" + model + '\'' +
+            ", vehicleGeneration='" + vehicleGeneration + '\'' +
+            ", pictureNumber='" + pictureNumber + '\'' +
+            ", price='" + price + '\'' +
+            ", power='" + power + '\'' +
+            ", engineCapacity='" + engineCapacity + '\'' +
+            ", maximumSpeed='" + maximumSpeed + '\'' +
+            ", fullMass='" + fullMass + '\'' +
+            ", carClass='" + carClass + '\'' +
+            '}';
+    }
 }

@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import ru.edu.entity.CarEntity;
 import ru.edu.repo.CarRepository;
 
+import java.util.List;
+
 @Service
 public class CarService {
 
@@ -15,6 +17,14 @@ public class CarService {
     }
     public CarEntity findCar(String id){
         return repository.findCarById(Long.parseLong(id));
+    }
+    public List<CarEntity>findAllCar(){
+        return repository.findByBrand("ford");
+    }
+    public CarEntity updatePriceCar(long idCar,int newPrice){
+        CarEntity car=findCar(String.valueOf(idCar));
+        car.setPrice(String.valueOf(newPrice));
+        return  repository.save(car);
     }
 
     @Autowired

@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" lang="en">
 <head>
-    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>user-report</title>
+    <meta charset="UTF-8">
+    <title>all-car</title>
 </head>
 <body>
-<ul th:each="report : ${user_reports}">
-    <li th:text="${report}"></li>
+<ul th:each="car : ${carList}">
+    <li th:text="${car}"></li>
 </ul>
 </body>
 </html>

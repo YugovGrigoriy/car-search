@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,15 +18,14 @@ import ru.edu.service.UserService;
 
 import java.io.IOException;
 
-@RestController
+@Controller
 @RequestMapping(value = "/api/car", consumes = MediaType.ALL_VALUE)
 public class ApiCarController {
     UserService userService;
     private static final Logger logger = LoggerFactory.getLogger(ApiCarController.class);
 
     @PostMapping(value = "/add/favorite")
-    public void addFavoriteCar(@RequestParam(value = "idCar") String carId,
-                               HttpServletResponse response) throws IOException {
+    public String addFavoriteCar(@RequestParam(value = "idCar") String carId){
         if (carId == null) {
             logger.info(" ");//todo решить что делать
         }
@@ -43,17 +43,17 @@ public class ApiCarController {
             user.setFavoriteCar1(carId);
         }
         userService.updateUser(user);
-        response.sendRedirect("/engine/me");
+        return "redirect:/engine/me";
     }
     @PostMapping(value = "/clear")
-    public void clear(HttpServletResponse response) throws IOException {
+    public String clear(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         UserSite user = userService.findByUsername(username);
         user.setFavoriteCar1(null);
         user.setFavoriteCar2(null);
         userService.updateUser(user);
-        response.sendRedirect("/engine/me");
+        return "redirect:/engine/me";
     }
 
 
