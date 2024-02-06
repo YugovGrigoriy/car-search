@@ -14,11 +14,15 @@
     <form th:action="@{/admin/blocked-user}" method="get">
     <button class="admin-button admin-button-block">Block user</button>
     </form>
-    <button class="admin-button admin-button-info">Change vehicle information</button>
+    <form th:action="@{/admin/update}" method="get">
+    <button class="admin-button admin-button-info">Update vehicle information</button>
+    </form>
     <form th:action="@{/admin/user-report}" method="get">
     <button class="admin-button admin-button-complaints">View user complaints</button>
     </form>
+    <form th:action="@{/admin/all-car}" method="get">
     <button class="admin-button admin-button-info">find car id</button>
+    </form>
     <div id="user-list-container">
 
         <ul th:each="user : ${userList}">

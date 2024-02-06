@@ -61,7 +61,10 @@ public class UserService implements UserDetailsService {
     }
 
     public void updateUser(UserSite user) {
-        //todo проверку на корректность возраста и имени
+        int age=user.getAge();
+        if(age>120||age<1){
+            //todo //
+        }
         try {
             userRepository.save(user);
         } catch (Exception e) {

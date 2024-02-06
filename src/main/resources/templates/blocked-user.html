@@ -20,8 +20,10 @@
         ID User:
         <input type="number" name="ID" required>
         <button class="admin-button admin-button-unblock">Unblock</button>
+
     </label>
     </form>
+    <p th:text="${err}"></p>
     <div id="user-list-container">
 
         <ul th:each="user : ${userList}">

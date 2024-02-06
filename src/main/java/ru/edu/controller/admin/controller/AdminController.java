@@ -7,12 +7,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import ru.edu.entity.CarEntity;
+import ru.edu.entity.ReportEntity;
 import ru.edu.entity.UserSite;
+import ru.edu.service.CarService;
+import ru.edu.service.ReportService;
 import ru.edu.service.UserService;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +22,8 @@ import java.util.List;
 @RequestMapping(value = "/admin")
 public class AdminController {
     UserService userService;
+    CarService carService;
+    ReportService reportService;
     private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 
     @GetMapping(value = "/admin-dashboard")
@@ -33,34 +36,55 @@ public class AdminController {
 
     @GetMapping(value = "/user-report")
     public String userReport(Model model) {
-        String fileContent = null;
-        try (FileReader reader = new FileReader("logs/user_report.txt");
-             BufferedReader bufferedReader = new BufferedReader(reader)) {
-            String line;
-            StringBuilder content = new StringBuilder();
-            while ((line = bufferedReader.readLine()) != null) {
-                content.append(line).append("<br>");
-            }
-            fileContent = content.toString();
+        List<String> res = new ArrayList<>();
+        List<ReportEntity> reports = reportService.findAll();
+        for (int i = 0; i < reports.size(); i++) {
+            ReportEntity report = reports.get(i);
+            String r = String.format("Report #%d: id=%d, report date: %s, name = %s, email:%s, message:%s",
+                i + 1,
+                report.getId(),
+                report.getLocalDateTime(),
+                report.getName(),
+                report.getEmail(),
+                report.getMessage());
+            res.add(r);
 
-        } catch (IOException ex) {
-            logger.info(ex.toString());
         }
-        if (fileContent == null) {
-            fileContent = "no complaints";
-        }
-        model.addAttribute("user_report", fileContent);
+        model.addAttribute("user_reports", res);
         return "user-report";
     }
+
     @GetMapping(value = "/blocked-user")
-    public String blockedUser(Model model){
-        List<UserSite>users=userService.findAllUserByRoleBlocked();
-        model.addAttribute("userList",users);
+    public String blockedUser(Model model) {
+        List<UserSite> users = userService.findAllUserByRoleBlocked();
+        model.addAttribute("userList", users);
         return "blocked-user";
+    }
+
+    @GetMapping(value = "/all-car")
+    public String getAllCar(Model model) {
+        List<CarEntity> cars = carService.findAllCar();
+        model.addAttribute("carList", cars);
+        return "all-cars";
+    }
+
+    @GetMapping(value = "/update")
+    public String updateCar() {
+        return "update-car";
     }
 
     @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;
+    }
+
+    @Autowired
+    public void setCarService(CarService carService) {
+        this.carService = carService;
+    }
+
+    @Autowired
+    public void setReportService(ReportService reportService) {
+        this.reportService = reportService;
     }
 }

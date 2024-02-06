@@ -10,9 +10,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import ru.edu.entity.CarEntity;
 import ru.edu.entity.UserSite;
 import ru.edu.service.CarService;
 import ru.edu.service.UserService;
+import ru.edu.utils.StringFormatter;
+import ru.edu.utils.ToRomanNumerals;
 
 
 @Controller
@@ -54,7 +57,6 @@ public class UserController {
     }
 
 
-
     @GetMapping(value = "/engine/me")
     public String personalArea(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -63,21 +65,35 @@ public class UserController {
         model.addAttribute("userRole", user.getRole());
         model.addAttribute("name", user.getName());
         model.addAttribute("age", user.getAge());
-        String favoriteCar1 = null;
-        String favoriteCar2 = null;
-        if (user.getFavoriteCar1() != null) {
-            favoriteCar1 = "Ford " + carService.findCar(user.getFavoriteCar1()).getModel();
+        StringBuilder favoriteCar1 = null;
+        StringBuilder favoriteCar2 = null;
+
+        if (user.getFavoriteCar1() != null) {//todo format, Ford
+            CarEntity car = carService.findCar(user.getFavoriteCar1());
+            favoriteCar1 = new StringBuilder();
+            favoriteCar1.append(String.format("%s %s %s",
+                StringFormatter.capitalizeFirstLetter(car.getBrand()),
+                StringFormatter.capitalizeFirstLetter(car.getModel()),
+                ToRomanNumerals.toRoman(Integer.parseInt(car.getVehicleGeneration()))));
+
         }
         if (user.getFavoriteCar2() != null) {
-            favoriteCar2 = "Ford " + carService.findCar(user.getFavoriteCar2()).getModel();
+            CarEntity car = carService.findCar(user.getFavoriteCar2());
+            favoriteCar2 = new StringBuilder();
+            favoriteCar2.append(String.format("%s %s %s",
+                StringFormatter.capitalizeFirstLetter(car.getBrand()),
+                StringFormatter.capitalizeFirstLetter(car.getModel()),
+                ToRomanNumerals.toRoman(Integer.parseInt(car.getVehicleGeneration()))));
+
         }
         model.addAttribute("position1", favoriteCar1);
         model.addAttribute("position2", favoriteCar2);
         return "personal-area";
     }
-    @GetMapping(value = "/report")//todo бд
-    public String report(){
-        return"user-message";
+
+    @GetMapping(value = "/report")
+    public String report() {
+        return "user-message";
     }
 
     @GetMapping("/help")

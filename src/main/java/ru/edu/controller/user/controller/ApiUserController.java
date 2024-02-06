@@ -10,11 +10,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import ru.edu.entity.ReportEntity;
 import ru.edu.entity.UserSite;
+import ru.edu.service.ReportService;
 import ru.edu.service.UserService;
 
-import java.io.FileWriter;
-import java.io.IOException;
+
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -25,11 +26,12 @@ public class ApiUserController {
 
 
     private UserService userService;
+    private ReportService reportService;
     private static final Logger logger = LoggerFactory.getLogger(ApiUserController.class);
     //logger.info("trying to register with an existing login: "+username);
 
     @PostMapping("/create")
-    public String signUpForm(@ModelAttribute UserSite user, HttpServletResponse response) throws IOException {
+    public String signUpForm(@ModelAttribute UserSite user) {
 
         if (userService.saveUser(user)) {
             logger.info("user:" + user.getUsername() + " successfully registered");
@@ -42,51 +44,51 @@ public class ApiUserController {
     }
 
     @PostMapping("/user/me")
-    public void fillPersonDate(HttpServletResponse response,
-                               @RequestParam("username") String userName,
-                               @RequestParam("age") int age,
-                               @RequestParam("name") String name) throws IOException {
+    public String fillPersonDate(@RequestParam("username") String userName,
+                                 @RequestParam("age") int age,
+                                 @RequestParam("name") String name){
 
         UserSite currentUser = userService.findByUsername(userName);
         currentUser.setName(name);
         currentUser.setAge(age);
         userService.updateUser(currentUser);
         logger.info("this user update name:" + name + " age:" + age);
-        response.sendRedirect("/login");//todo переделать
+        return "redirect:/login";
 
     }
 
     @PostMapping(value = "/report")
-    public void report(@RequestParam("name") String name,
-                       @RequestParam("message") String message,
-                       @RequestParam("email") String email,
-                       HttpServletResponse response) throws IOException {
-        try (FileWriter writer = new FileWriter("logs/user_report.txt", true)) {
-            LocalDateTime currentDateTime = LocalDateTime.now();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-            String formattedDateTime = currentDateTime.format(formatter);
-            writer.write("""
-
-                message
-                """);
-            writer.write("--------------------------------" + "\n");
-            writer.write(formattedDateTime + "\n");
-            writer.write("name: " + name + "\n");
-            writer.write("email: " + email + "\n");
-            writer.write(message + "\n");
-            writer.write("--------------------------------" + "\n");
-
-        } catch (IOException ex) {
-            logger.info(ex.toString());
+    public String report(@RequestParam("name") String name,
+                         @RequestParam("message") String message,
+                         @RequestParam("email") String email) {
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String formattedDateTime = currentDateTime.format(formatter);
+        if(name==null){
+            name="default name";
         }
-        response.sendRedirect("/");
+        if(message==null){
+           return "redirect:/";
+        }
+        if(email==null){
+            email="email was not provided";
+        }
+        ReportEntity report = new ReportEntity(formattedDateTime, name, message, email);
+        reportService.save(report);
+        return "redirect:/";
     }
+
     @GetMapping("/logout")
-    public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
+    public String logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
         if (authentication != null) {
             new SecurityContextLogoutHandler().logout(request, response, authentication);
         }
-        response.sendRedirect("/");
+        return "redirect:/";
+    }
+
+    @Autowired
+    public void setReportService(ReportService reportService){
+        this.reportService=reportService;
     }
 
     @Autowired

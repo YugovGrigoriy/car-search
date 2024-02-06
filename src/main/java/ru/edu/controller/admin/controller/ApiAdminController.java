@@ -1,42 +1,62 @@
 package ru.edu.controller.admin.controller;
 
-import jakarta.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import ru.edu.service.CarService;
 import ru.edu.service.UserService;
 
-import java.io.IOException;
 
-@RestController
+@Controller
 @RequestMapping(value = "/admin/api")
 public class ApiAdminController {
     UserService userService;
+    CarService carService;
 
     @PostMapping("/add-user/blockList")
-    public void blockUser(@RequestParam("ID") long id,
-                          HttpServletResponse response) throws IOException {
+    public String blockUser(@RequestParam("ID") long id, Model model) {
 
-            if(id>0) {
+        try {
+            if (id > 0) {
                 userService.changeRole("BLOCKED", id);
             }
-
-        response.sendRedirect("/admin/blocked-user");
+        } catch (NullPointerException ex) {
+            model.addAttribute("err", "user not found");
+            return "blocked-user";
+        }
+        return "redirect:/admin/blocked-user";
 
     }
 
     @PostMapping("/add-user/unBlock")
-    public void unBlockUser(@RequestParam("ID") long id,
-                          HttpServletResponse response) throws IOException {
-        if(id>0) {
-            userService.changeRole("USER", id);
+    public String unBlockUser(@RequestParam("ID") long id, Model model) {
+        try {
+            if (id > 0) {
+                userService.changeRole("USER", id);
+            }
+        } catch (NullPointerException ex) {
+            model.addAttribute("err", "user not found");
+            return "blocked-user";
         }
-        response.sendRedirect("/admin/blocked-user");
+        return "redirect:/admin/blocked-user";
     }
 
+    @PostMapping(value = "/update-car-price")
+    public String updateCarPrice(@RequestParam("newPrice") int newPrice,
+                                 @RequestParam("carId") long carId) {
+        carService.updatePriceCar(carId, newPrice);
+        return "redirect:/admin/admin-dashboard";
+    }
+
+    @Autowired
+    public void setCarService(CarService carService) {
+        this.carService = carService;
+    }
 
     @Autowired
     public void setUserService(UserService userService) {
