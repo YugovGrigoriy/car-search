@@ -21,10 +21,10 @@ public class CarService {
     public List<CarEntity>findAllCar(){
         return repository.findByBrand("ford");
     }
-    public CarEntity updatePriceCar(long idCar,int newPrice){
+    public void updatePriceCar(long idCar, int newPrice){
         CarEntity car=findCar(String.valueOf(idCar));
         car.setPrice(String.valueOf(newPrice));
-        return  repository.save(car);
+        repository.save(car);
     }
 
     @Autowired
