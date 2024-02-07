@@ -8,23 +8,30 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.edu.entity.CarEntity;
-import ru.edu.entity.ReportEntity;
 import ru.edu.entity.UserSite;
 import ru.edu.service.CarService;
 import ru.edu.service.ReportService;
 import ru.edu.service.UserService;
-
-import java.util.ArrayList;
 import java.util.List;
 
 
 @Controller
 @RequestMapping(value = "/admin")
 public class AdminController {
-    UserService userService;
-    CarService carService;
-    ReportService reportService;
+    private UserService userService;
+    private CarService carService;
+    private ReportService reportService;
     private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
+
+    public AdminController() {
+    }
+
+    @Autowired
+    public AdminController(UserService userService, CarService carService, ReportService reportService) {
+        this.userService = userService;
+        this.carService = carService;
+        this.reportService = reportService;
+    }
 
     @GetMapping(value = "/admin-dashboard")
     public String adminPanel(Model model) {
@@ -36,21 +43,8 @@ public class AdminController {
 
     @GetMapping(value = "/user-report")
     public String userReport(Model model) {
-        List<String> res = new ArrayList<>();
-        List<ReportEntity> reports = reportService.findAll();
-        for (int i = 0; i < reports.size(); i++) {
-            ReportEntity report = reports.get(i);
-            String r = String.format("Report #%d: id=%d, report date: %s, name = %s, email:%s, message:%s",
-                i + 1,
-                report.getId(),
-                report.getLocalDateTime(),
-                report.getName(),
-                report.getEmail(),
-                report.getMessage());
-            res.add(r);
-
-        }
-        model.addAttribute("user_reports", res);
+        List<String>userReport=reportService.getAllReports();
+        model.addAttribute("user_reports", userReport);
         return "user-report";
     }
 
@@ -73,18 +67,5 @@ public class AdminController {
         return "update-car";
     }
 
-    @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
 
-    @Autowired
-    public void setCarService(CarService carService) {
-        this.carService = carService;
-    }
-
-    @Autowired
-    public void setReportService(ReportService reportService) {
-        this.reportService = reportService;
-    }
 }

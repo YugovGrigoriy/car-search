@@ -3,6 +3,9 @@ package ru.edu.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "registered-users")
 public class UserSite {
@@ -29,6 +32,18 @@ public class UserSite {
     private String favoriteCar1;
     @Column
     private String favoriteCar2;
+    @ManyToMany
+    @CollectionTable(name = "favorite_cars", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "car")
+    private List<CarEntity> favoriteCars = new ArrayList<>();
+
+    public List<CarEntity> getFavoriteCars() {
+        return favoriteCars;
+    }
+
+    public void setFavoriteCars(List<CarEntity> favoriteCars) {
+        this.favoriteCars = favoriteCars;
+    }
 
     public String getFavoriteCar2() {
         return favoriteCar2;

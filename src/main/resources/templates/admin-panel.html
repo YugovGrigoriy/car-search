@@ -4,24 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/styles/admin-styles.css">
+    <link rel="stylesheet" href="/styles/styles-personal-area.css">
     <title>Admin Dashboard</title>
 </head>
 <body>
 <header class="admin-header">
     <h1>Admin Dashboard</h1>
 </header>
+<a href="/">
+    <div class="home"></div>
+</a>
 <div class="admin-container">
     <form th:action="@{/admin/blocked-user}" method="get">
     <button class="admin-button admin-button-block">Block user</button>
     </form>
     <form th:action="@{/admin/update}" method="get">
-    <button class="admin-button admin-button-info">Update vehicle information</button>
+    <button class="admin-button admin-button-info">Update car price</button>
     </form>
     <form th:action="@{/admin/user-report}" method="get">
-    <button class="admin-button admin-button-complaints">View user complaints</button>
+    <button class="admin-button admin-button-complaints">User report</button>
     </form>
     <form th:action="@{/admin/all-car}" method="get">
-    <button class="admin-button admin-button-info">find car id</button>
+    <button class="admin-button admin-button-info">Find a car by ID</button>
     </form>
     <div id="user-list-container">
 

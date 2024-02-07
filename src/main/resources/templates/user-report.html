@@ -3,8 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/styles-personal-area.css">
     <title>user-report</title>
 </head>
+<a href="/">
+    <div class="home"></div>
+</a>
 <body>
 <ul th:each="report : ${user_reports}">
     <li th:text="${report}"></li>

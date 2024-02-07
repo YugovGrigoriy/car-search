@@ -22,8 +22,16 @@ import static ru.edu.utils.ToRomanNumerals.toRoman;
 @Controller
 @RequestMapping(value = "/car")
 public class CarController {
-    UserService userService;
-    CarService carService;
+    private UserService userService;
+    private CarService carService;
+
+    public CarController() {
+    }
+@Autowired
+    public CarController(UserService userService, CarService carService) {
+        this.userService = userService;
+        this.carService = carService;
+    }
 
     @GetMapping("/find")
     public String findCar(Model model,
@@ -77,13 +85,5 @@ public class CarController {
     }
 
 
-    @Autowired
-    public void setCarService(CarService carService) {
-        this.carService = carService;
-    }
 
-    @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
 }
