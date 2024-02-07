@@ -18,13 +18,6 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private UserDetailsService userDetailsService;
-
-    @Autowired
-    public void setUserDetailsService(UserDetailsService userDetailsService) {
-        this.userDetailsService = userDetailsService;
-    }
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests((auth) -> auth
@@ -42,8 +35,8 @@ public class SecurityConfig {
 
 
                 ).permitAll()
-                .requestMatchers("/admin/*","/admin/api/**").hasAnyRole("ADMIN")
-                .anyRequest().hasAnyRole("USER","ADMIN")
+                .requestMatchers("/admin/*", "/admin/api/**").hasAnyRole("ADMIN")
+                .anyRequest().hasAnyRole("USER", "ADMIN")
 
 
             )
@@ -70,13 +63,6 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
-        AuthenticationManagerBuilder auth = http.getSharedObject(AuthenticationManagerBuilder.class);
-        auth.userDetailsService(userDetailsService)
-            .passwordEncoder(passwordEncoder());
-        return auth.build();
-    }
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {

@@ -17,12 +17,20 @@ import ru.edu.service.UserService;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 @Controller
 @RequestMapping(value = "/api/car", consumes = MediaType.ALL_VALUE)
 public class ApiCarController {
-    UserService userService;
+    private UserService userService;
     private static final Logger logger = LoggerFactory.getLogger(ApiCarController.class);
+
+    public ApiCarController() {
+    }
+@Autowired
+    public ApiCarController(UserService userService) {
+        this.userService = userService;
+    }
 
     @PostMapping(value = "/add/favorite")
     public String addFavoriteCar(@RequestParam(value = "idCar") String carId){
@@ -35,6 +43,7 @@ public class ApiCarController {
         if(user.getFavoriteCar1() != null) {
             if(user.getFavoriteCar2()==null){
                 user.setFavoriteCar2(carId);
+user.setFavoriteCars(new ArrayList<>());
             } else if (user.getFavoriteCar2()!=null) {
                 user.setFavoriteCar1(carId);
             }
@@ -57,8 +66,5 @@ public class ApiCarController {
     }
 
 
-    @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
+
 }

@@ -4,9 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/styles/admin-styles.css">
+    <link rel="stylesheet" href="/styles/styles-personal-area.css">
     <title>blocked-user</title>
 </head>
 <body>
+<a href="/">
+    <div class="home"></div>
+</a>
 <div class="login-container">
     <form th:action="@{/admin/api/add-user/blockList}" method="post">
         <label>

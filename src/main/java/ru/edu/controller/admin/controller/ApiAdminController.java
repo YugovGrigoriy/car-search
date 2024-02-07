@@ -15,8 +15,16 @@ import ru.edu.service.UserService;
 @Controller
 @RequestMapping(value = "/admin/api")
 public class ApiAdminController {
-    UserService userService;
-    CarService carService;
+    private UserService userService;
+    private CarService carService;
+
+    public ApiAdminController() {
+    }
+@Autowired
+    public ApiAdminController(UserService userService, CarService carService) {
+        this.userService = userService;
+        this.carService = carService;
+    }
 
     @PostMapping("/add-user/blockList")
     public String blockUser(@RequestParam("ID") long id, Model model) {
@@ -25,8 +33,8 @@ public class ApiAdminController {
             if (id > 0) {
                 userService.changeRole("BLOCKED", id);
             }
-        } catch (NullPointerException ex) {
-            model.addAttribute("err", "user not found");
+        } catch (RuntimeException ex) {
+        model.addAttribute("err", "user not found");
             return "blocked-user";
         }
         return "redirect:/admin/blocked-user";
@@ -39,7 +47,7 @@ public class ApiAdminController {
             if (id > 0) {
                 userService.changeRole("USER", id);
             }
-        } catch (NullPointerException ex) {
+        } catch (RuntimeException ex) {
             model.addAttribute("err", "user not found");
             return "blocked-user";
         }
@@ -53,14 +61,6 @@ public class ApiAdminController {
         return "redirect:/admin/admin-dashboard";
     }
 
-    @Autowired
-    public void setCarService(CarService carService) {
-        this.carService = carService;
-    }
 
-    @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
 }
 

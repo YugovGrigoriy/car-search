@@ -59,7 +59,7 @@ public class CarEntity {
         return vehicleGeneration;
     }
 
-    public void setVehicle_generation(String vehicleGeneration) {
+    public void setVehicleGeneration(String vehicleGeneration) {
         this.vehicleGeneration = vehicleGeneration;
     }
 

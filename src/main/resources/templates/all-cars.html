@@ -2,9 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/styles-personal-area.css">
     <meta charset="UTF-8">
     <title>all-car</title>
 </head>
+<a href="/">
+    <div class="home"></div>
+</a>
 <body>
 <ul th:each="car : ${carList}">
     <li th:text="${car}"></li>

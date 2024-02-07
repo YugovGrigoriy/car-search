@@ -22,8 +22,18 @@ import ru.edu.utils.ToRomanNumerals;
 @RequestMapping
 public class UserController {
 
-    UserService userService;
-    CarService carService;
+    private UserService userService;
+    private CarService carService;
+
+    public UserController() {
+    }
+
+    @Autowired
+    public UserController(UserService userService, CarService carService) {
+        this.userService = userService;
+        this.carService = carService;
+    }
+
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @GetMapping
@@ -65,25 +75,23 @@ public class UserController {
         model.addAttribute("userRole", user.getRole());
         model.addAttribute("name", user.getName());
         model.addAttribute("age", user.getAge());
-        StringBuilder favoriteCar1 = null;
-        StringBuilder favoriteCar2 = null;
+        String favoriteCar1 = user.getFavoriteCar1();
+        String favoriteCar2 = user.getFavoriteCar2();
 
-        if (user.getFavoriteCar1() != null) {//todo format, Ford
+        if (favoriteCar1 != null) {
             CarEntity car = carService.findCar(user.getFavoriteCar1());
-            favoriteCar1 = new StringBuilder();
-            favoriteCar1.append(String.format("%s %s %s",
+            favoriteCar1 = String.format("%s %s %s",
                 StringFormatter.capitalizeFirstLetter(car.getBrand()),
                 StringFormatter.capitalizeFirstLetter(car.getModel()),
-                ToRomanNumerals.toRoman(Integer.parseInt(car.getVehicleGeneration()))));
+                ToRomanNumerals.toRoman(Integer.parseInt(car.getVehicleGeneration())));
 
         }
-        if (user.getFavoriteCar2() != null) {
+        if (favoriteCar2 != null) {
             CarEntity car = carService.findCar(user.getFavoriteCar2());
-            favoriteCar2 = new StringBuilder();
-            favoriteCar2.append(String.format("%s %s %s",
+            favoriteCar2 = String.format("%s %s %s",
                 StringFormatter.capitalizeFirstLetter(car.getBrand()),
                 StringFormatter.capitalizeFirstLetter(car.getModel()),
-                ToRomanNumerals.toRoman(Integer.parseInt(car.getVehicleGeneration()))));
+                ToRomanNumerals.toRoman(Integer.parseInt(car.getVehicleGeneration())));
 
         }
         model.addAttribute("position1", favoriteCar1);
@@ -106,13 +114,5 @@ public class UserController {
         return "helpEU";
     }
 
-    @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
 
-    @Autowired
-    public void setCarService(CarService carService) {
-        this.carService = carService;
-    }
 }

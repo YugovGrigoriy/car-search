@@ -27,6 +27,15 @@ public class ApiUserController {
 
     private UserService userService;
     private ReportService reportService;
+
+    public ApiUserController() {
+    }
+@Autowired
+    public ApiUserController(UserService userService, ReportService reportService) {
+        this.userService = userService;
+        this.reportService = reportService;
+    }
+
     private static final Logger logger = LoggerFactory.getLogger(ApiUserController.class);
     //logger.info("trying to register with an existing login: "+username);
 
@@ -86,13 +95,5 @@ public class ApiUserController {
         return "redirect:/";
     }
 
-    @Autowired
-    public void setReportService(ReportService reportService){
-        this.reportService=reportService;
-    }
 
-    @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
 }

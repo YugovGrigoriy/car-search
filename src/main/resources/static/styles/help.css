@@ -24,6 +24,7 @@ body {
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
 }
 
+
 h1 {
     margin-bottom: 20px;
     color: #333;
@@ -67,8 +68,8 @@ a:hover {
     cursor: pointer;
     border-radius: 50%;
     position: fixed;
-    top: 20px;
-    right: 20px;
+    top: 15px;
+    right: 70px;
     transition: background-color 0.3s ease;
 }
 

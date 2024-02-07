@@ -10,7 +10,14 @@ import java.util.List;
 @Service
 public class CarService {
 
-    CarRepository repository;
+    private CarRepository repository;
+
+    public CarService() {
+    }
+@Autowired
+    public CarService(CarRepository repository) {
+        this.repository = repository;
+    }
 
     public CarEntity findCar(String model, String vehicleGeneration){
         return repository.findByModelAndVehicleGeneration(model,vehicleGeneration);
@@ -27,8 +34,5 @@ public class CarService {
         repository.save(car);
     }
 
-    @Autowired
-    public void setRepository(CarRepository repository) {
-        this.repository = repository;
-    }
+
 }

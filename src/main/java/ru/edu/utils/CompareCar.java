@@ -11,39 +11,48 @@ import static ru.edu.utils.ToRomanNumerals.toRoman;
 public class CompareCar {
 
 
-    public static List<String> compareCar(CarEntity car1, CarEntity car2) {//todo список различий (%s-строка, %d-int/long,%f.3 -> 10.542,%n переход на новую строку
+    public static List<String> compareCar(CarEntity car1, CarEntity car2) {
 
 
         List<String> result = new ArrayList<>();
         if (!(car1.getMaximumSpeed().equals(car2.getMaximumSpeed()))) {
-            result.add(String.format("%s %s is %s faster",
+            result.add(String.format("%s %s %s is %s faster",
                 StringFormatter.capitalizeFirstLetter(compareSpeed(car1, car2).getBrand()),
                 StringFormatter.capitalizeFirstLetter(compareSpeed(car1, car2).getModel()),
-                CompareTwoNumbers(Integer.parseInt(car1.getMaximumSpeed()), Integer.parseInt(car2.getMaximumSpeed()))));
+                ToRomanNumerals.toRoman(Integer.parseInt(compareSpeed(car1,car2).getVehicleGeneration())),
+                compareTwoNumbers(Integer.parseInt(car1.getMaximumSpeed()), Integer.parseInt(car2.getMaximumSpeed()))));
         }
 
         if (!(car1.getPrice().equals(car2.getPrice()))) {
-            result.add(String.format("%s %s costs %s more",
+            result.add(String.format("%s %s %s costs %s more",
                 StringFormatter.capitalizeFirstLetter(comparePrice(car1, car2).getBrand()),
                 StringFormatter.capitalizeFirstLetter(comparePrice(car1, car2).getModel()),
-                CompareTwoNumbers(Integer.parseInt(car1.getPrice()), Integer.parseInt(car2.getPrice()))));
+                ToRomanNumerals.toRoman(Integer.parseInt(comparePrice(car1,car2).getVehicleGeneration())),
+                compareTwoNumbers(Integer.parseInt(car1.getPrice()), Integer.parseInt(car2.getPrice()))));
         }
         if(!(car1.getFullMass().equals(car2.getFullMass()))) {
-            result.add(String.format("%s %s weighs %s more",
+            result.add(String.format("%s %s %s weighs %s more",
                 StringFormatter.capitalizeFirstLetter(compareFullMass(car1, car2).getBrand()),
                 StringFormatter.capitalizeFirstLetter(compareFullMass(car1, car2).getModel()),
-                CompareTwoNumbers(Integer.parseInt(car1.getFullMass()), Integer.parseInt(car2.getFullMass()))));
+                ToRomanNumerals.toRoman(Integer.parseInt(compareFullMass(car1,car2).getVehicleGeneration())),
+                compareTwoNumbers(Integer.parseInt(car1.getFullMass()), Integer.parseInt(car2.getFullMass()))));
         }
         return result;
     }
 
-    public static String buildCompareResult(CarEntity car1, CarEntity car2) {//todo собираем итоговую строку
+    public static String buildCompareResult(CarEntity car1, CarEntity car2) {
         List<String> arg = CompareCar.compareCar(car1, car2);
         StringBuilder sb = new StringBuilder();
         sb.append("<h2>Comparing two cars:</h2> <br> ");
-        sb.append(String.format("Ford %s  %s", car1.getModel(), toRoman(Integer.parseInt(car1.getVehicleGeneration()))));
+        sb.append(String.format("%s %s %s",
+            StringFormatter.capitalizeFirstLetter(car1.getBrand()),
+            StringFormatter.capitalizeFirstLetter(car1.getModel()),
+            toRoman(Integer.parseInt(car1.getVehicleGeneration()))));
         sb.append("<br>");
-        sb.append(String.format("Ford  %s  %s", car2.getModel(), toRoman(Integer.parseInt(car2.getVehicleGeneration()))));
+        sb.append(String.format("%s %s %s",
+            StringFormatter.capitalizeFirstLetter(car2.getBrand()),
+            StringFormatter.capitalizeFirstLetter(car2.getModel()),
+            toRoman(Integer.parseInt(car2.getVehicleGeneration()))));
         sb.append("<br>");
 
         if (arg.isEmpty()) {
@@ -65,8 +74,14 @@ public class CompareCar {
      * @param number2 more than that
      * @return x%
      */
-    public static String CompareTwoNumbers(int number1, int number2) {
+    public static String compareTwoNumbers(int number1, int number2) {
         if (number1 == number2) {
+            return "0%";
+        }
+        if (number1 == 0|| number2==0) {
+            return "0%";
+        }
+        if (number1 <0|| number2<0) {
             return "0%";
         }
 
@@ -80,27 +95,32 @@ public class CompareCar {
         }
 
         int percentageDifference = (int) (Math.round(((double) numerator / denominator) * 100 - 100));
-        return percentageDifference + "% ";
+        return percentageDifference + "%";
     }
 
     /**
      * Find the highest speed of objects
      */
     public static CarEntity compareSpeed(CarEntity car1, CarEntity car2) {
+        if(car1.getMaximumSpeed().equals("0")||car2.getMaximumSpeed().equals("0")){
+            CarEntity car=new CarEntity();
+            car.setMaximumSpeed("car speed cannot be 0");
+            return car;
+        }
         int speedCar1 = Integer.parseInt(car1.getMaximumSpeed());
         int speedCar2 = Integer.parseInt(car2.getMaximumSpeed());
         if(speedCar1<1){
-            car1.setMaximumSpeed("The speed of the car cannot be 0 or negative, comparison is impossible!");
+            car1.setMaximumSpeed("The speed of the car cannot be negative, comparison is impossible!");
             return car1;
         }
         if(speedCar2<1){
-            car2.setMaximumSpeed("The speed of the car cannot be 0 or negative, comparison is impossible!");
+            car2.setMaximumSpeed("The speed of the car cannot be negative, comparison is impossible!");
             return car2;
         }
         if(speedCar1==speedCar2){
-            car1.setFullMass("the cars speed is the same");
-            car2.setFullMass("the cars speed is the same");
-            return new CarEntity();
+            CarEntity car=new CarEntity();
+            car.setMaximumSpeed("the cars speed is the same");
+            return car;
         }
         if (speedCar1 < speedCar2) {
             return car2;
@@ -112,20 +132,25 @@ public class CompareCar {
      * Find a more expensive car
      */
     public static CarEntity comparePrice(CarEntity car1, CarEntity car2) {
+        if(car1.getPrice().equals("0")||car2.getPrice().equals("0")){
+            CarEntity car=new CarEntity();
+            car.setPrice("car price cannot be equal to 0");
+            return car;
+        }
         int priceCar1 = Integer.parseInt(car1.getPrice());
         int priceCar2 = Integer.parseInt(car2.getPrice());
-        if(priceCar1<1){
-            car1.setPrice("The price of the car cannot be equal to 0 or negative, comparison is impossible!");
+        if(priceCar1<0){
+            car1.setPrice("The price of the car cannot be negative, comparison is impossible!");
             return car1;
         }
-        if(priceCar2<1){
-            car2.setPrice("The price of the car cannot be equal to 0 or negative, comparison is impossible!");
+        if(priceCar2<0){
+            car2.setPrice("The price of the car cannot be negative, comparison is impossible!");
             return car2;
         }
         if(priceCar1==priceCar2){
-            car1.setFullMass("car prices are the same");
-            car2.setFullMass("car prices are the same");
-            return new CarEntity();
+            CarEntity car=new CarEntity();
+            car.setPrice("cars prices are the same");
+            return car;
         }
         if (priceCar1 < priceCar2) {
             return car2;

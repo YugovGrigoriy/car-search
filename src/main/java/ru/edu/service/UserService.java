@@ -1,7 +1,7 @@
 package ru.edu.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,8 +23,10 @@ public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
+
+
     @Autowired
-    public UserService(UserRepository userRepository, @Lazy PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository,PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
@@ -86,6 +88,9 @@ public class UserService implements UserDetailsService {
     }
     public void changeRole(String newRole,long id){
         UserSite user=findById(id);
+       if(user==null){
+           throw new RuntimeException("user not found");
+       }
         user.setRole(newRole);
         updateUser(user);
     }
