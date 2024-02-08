@@ -27,7 +27,8 @@ public class CarController {
 
     public CarController() {
     }
-@Autowired
+
+    @Autowired
     public CarController(UserService userService, CarService carService) {
         this.userService = userService;
         this.carService = carService;
@@ -72,18 +73,21 @@ public class CarController {
     }
 
     @GetMapping(value = "/compare")
-    public String compare(Model model) {
+    public String compare(@RequestParam("position1") String carForComparison1,
+                          @RequestParam("position2") String carForComparison2,
+                          Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         UserSite user = userService.findByUsername(username);
-        CarEntity car1 = carService.findCar(user.getFavoriteCar1());
-        CarEntity car2 = carService.findCar(user.getFavoriteCar2());
+        String idCar1=StringFormatter.extractIdFromDescription(carForComparison1);
+        String idCar2=StringFormatter.extractIdFromDescription(carForComparison2);
+        CarEntity car1 = carService.findCar(idCar1);
+        CarEntity car2 = carService.findCar(idCar2);
         model.addAttribute("name", user.getName());
         model.addAttribute("age", user.getAge());
         model.addAttribute("resultCompareCar", CompareCar.buildCompareResult(car1, car2));
         return "personal-area";
     }
-
 
 
 }

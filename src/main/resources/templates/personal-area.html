@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/styles/styles-personal-area.css">
+    <script type="text/javascript" src="/js/favoritePosition.js"></script>
     <title>personal-area</title>
 </head>
 <body>
@@ -33,20 +34,26 @@
     </div>
 </section>
 <div class="favorite-positions">
-    <p>Car comparison:</p>
-    <p>Add two cars using the special button next to the search result and click "Compare".</p>
+    <p>Favorite cars:</p>
+    <p>Add  cars using the special button next to the search result.</p>
 </div>
-<div class="favorite-positions" th:if="${position1 != null}">
+<div class="favorite-positions" th:if="${favoritePosition!=null}">
     <h2>Favorite Positions</h2>
-    <ul>
-        <li th:text="${position1}"></li>
-        <li th:text="${position2}"></li>
+    <ul th:each="position : ${favoritePosition}">
+        <li>
+            <label>
+                <input type="checkbox" name="position" value="" th:value="${position}">
+            </label>
+            <span th:text="${position}"></span>
+        </li>
     </ul>
     <form th:action="@{/api/car/clear}" method="post">
         <button>Clear</button>
     </form>
-    <form th:action="@{/car/compare}" method="get" th:if="${position1 != null && position2 != null}">
-        <button>Compare</button>
+    <form th:action="@{/car/compare}" method="get" th:if="${favoritePosition!=null}">
+        <input type="hidden" name="position1" id="position1Input">
+        <input type="hidden" name="position2" id="position2Input">
+        <button id="compareButton">Compare</button>
     </form>
 </div>
 <div class="favorite-positions" th:if="${resultCompareCar != null}">
