@@ -59,6 +59,7 @@
 <body>
 <div class="container">
     <h1>Сar price update</h1>
+    <h2 th:text="${carNotFound}"></h2>
     <form th:action="@{/admin/api/update-car-price}" method="POST">
         <div class="form-group">
             <label for="carId">ID car:</label>

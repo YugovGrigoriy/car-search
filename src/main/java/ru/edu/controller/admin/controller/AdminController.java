@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.edu.entity.CarEntity;
 import ru.edu.entity.UserSite;
 import ru.edu.service.CarService;
@@ -63,7 +64,8 @@ public class AdminController {
     }
 
     @GetMapping(value = "/update")
-    public String updateCar() {
+    public String updateCar(@RequestParam(required = false) String carNotFound,Model model) {
+        model.addAttribute("carNotFound",carNotFound);
         return "update-car";
     }
 

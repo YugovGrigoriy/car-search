@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +15,6 @@ import ru.edu.entity.ReportEntity;
 import ru.edu.entity.UserSite;
 import ru.edu.service.ReportService;
 import ru.edu.service.UserService;
-
 
 
 import java.time.LocalDateTime;
@@ -30,7 +30,8 @@ public class ApiUserController {
 
     public ApiUserController() {
     }
-@Autowired
+
+    @Autowired
     public ApiUserController(UserService userService, ReportService reportService) {
         this.userService = userService;
         this.reportService = reportService;
@@ -55,7 +56,7 @@ public class ApiUserController {
     @PostMapping("/user/me")
     public String fillPersonDate(@RequestParam("username") String userName,
                                  @RequestParam("age") int age,
-                                 @RequestParam("name") String name){
+                                 @RequestParam("name") String name) {
 
         UserSite currentUser = userService.findByUsername(userName);
         currentUser.setName(name);
@@ -73,14 +74,14 @@ public class ApiUserController {
         LocalDateTime currentDateTime = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String formattedDateTime = currentDateTime.format(formatter);
-        if(name==null){
-            name="default name";
+        if (name == null) {
+            name = "default name";
         }
-        if(message==null){
-           return "redirect:/";
+        if (message == null) {
+            return "redirect:/";
         }
-        if(email==null){
-            email="email was not provided";
+        if (email == null) {
+            email = "email was not provided";
         }
         ReportEntity report = new ReportEntity(formattedDateTime, name, message, email);
         reportService.save(report);

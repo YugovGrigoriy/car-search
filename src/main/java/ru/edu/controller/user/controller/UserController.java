@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.edu.entity.CarEntity;
 import ru.edu.entity.UserSite;
-import ru.edu.service.CarService;
 import ru.edu.service.UserService;
 import ru.edu.utils.StringFormatter;
 import ru.edu.utils.ToRomanNumerals;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Controller
@@ -23,15 +25,14 @@ import ru.edu.utils.ToRomanNumerals;
 public class UserController {
 
     private UserService userService;
-    private CarService carService;
+
 
     public UserController() {
     }
 
     @Autowired
-    public UserController(UserService userService, CarService carService) {
+    public UserController(UserService userService) {
         this.userService = userService;
-        this.carService = carService;
     }
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
@@ -47,6 +48,9 @@ public class UserController {
                              @RequestParam(required = false) String newUsername) {
         if ("failed".equals(registrationStatus)) {
             model.addAttribute("registrationFailed", newUsername);
+        }
+        if ("failedEasyPassword".equals(registrationStatus)) {
+            model.addAttribute("registrationFailed", "the password is easy, use at least 1 uppercase, 1 lowercase and 1 number and a length of 8 characters");
         }
         return "register";
     }
@@ -75,27 +79,21 @@ public class UserController {
         model.addAttribute("userRole", user.getRole());
         model.addAttribute("name", user.getName());
         model.addAttribute("age", user.getAge());
-        String favoriteCar1 = user.getFavoriteCar1();
-        String favoriteCar2 = user.getFavoriteCar2();
-
-        if (favoriteCar1 != null) {
-            CarEntity car = carService.findCar(user.getFavoriteCar1());
-            favoriteCar1 = String.format("%s %s %s",
-                StringFormatter.capitalizeFirstLetter(car.getBrand()),
-                StringFormatter.capitalizeFirstLetter(car.getModel()),
-                ToRomanNumerals.toRoman(Integer.parseInt(car.getVehicleGeneration())));
-
+        List<CarEntity> favoriteCars = user.getFavoriteCars();
+        List<String> favoritePosition = new ArrayList<>();
+        if (!favoriteCars.isEmpty()) {
+            for (int i = 0; i < favoriteCars.size(); i++) {
+                CarEntity car = favoriteCars.get(i);
+                favoritePosition.add(String.format("%s: %s %s %s (id:%s)",
+                    i + 1,
+                    StringFormatter.capitalizeFirstLetter(car.getBrand()),
+                    StringFormatter.capitalizeFirstLetter(car.getModel()),
+                    ToRomanNumerals.toRoman(Integer.parseInt(car.getVehicleGeneration())),
+                    car.getId()));
+            }
+            model.addAttribute("favoritePosition", favoritePosition);
         }
-        if (favoriteCar2 != null) {
-            CarEntity car = carService.findCar(user.getFavoriteCar2());
-            favoriteCar2 = String.format("%s %s %s",
-                StringFormatter.capitalizeFirstLetter(car.getBrand()),
-                StringFormatter.capitalizeFirstLetter(car.getModel()),
-                ToRomanNumerals.toRoman(Integer.parseInt(car.getVehicleGeneration())));
 
-        }
-        model.addAttribute("position1", favoriteCar1);
-        model.addAttribute("position2", favoriteCar2);
         return "personal-area";
     }
 

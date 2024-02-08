@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import ru.edu.entity.CarEntity;
 import ru.edu.service.CarService;
 import ru.edu.service.UserService;
 
@@ -57,8 +58,13 @@ public class ApiAdminController {
     @PostMapping(value = "/update-car-price")
     public String updateCarPrice(@RequestParam("newPrice") int newPrice,
                                  @RequestParam("carId") long carId) {
-        carService.updatePriceCar(carId, newPrice);
-        return "redirect:/admin/admin-dashboard";
+        CarEntity car=carService.findCar(String.valueOf(carId));
+        if(car!=null){
+            carService.updatePriceCar(carId, newPrice);
+            return "redirect:/admin/admin-dashboard";
+        }
+        String carNotFound=String.format("car with id:%s not found",carId);
+        return "redirect:/admin/update?carNotFound="+carNotFound;
     }
 
 
