@@ -1,11 +1,14 @@
 package ru.edu.entity;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 
-
+@Data
 @Entity
 @Table(name = "report")
+
+@AllArgsConstructor
 public class ReportEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,47 +33,6 @@ public class ReportEntity {
         this.email = email;
     }
 
-    public String getLocalDateTime() {
-        return LocalDateTime;
-    }
-
-    public void setLocalDateTime(String localDateTime) {
-        LocalDateTime = localDateTime;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
 
     @Override
     public String toString() {

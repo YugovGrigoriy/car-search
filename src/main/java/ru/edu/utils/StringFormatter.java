@@ -3,8 +3,8 @@ package ru.edu.utils;
 public class StringFormatter {
 
     public static String capitalizeFirstLetter(String str) {
-        if (str.isEmpty() || Character.isDigit(str.charAt(0))) {
-            return str+"-change is not possible";
+        if (str == null||str.isEmpty() || Character.isDigit(str.charAt(0))) {
+            return "";
         }
 
         String firstLetter = str.substring(0, 1).toUpperCase();

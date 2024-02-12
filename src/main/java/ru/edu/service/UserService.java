@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import ru.edu.entity.UserSite;
+import ru.edu.entity.UserEntity;
 import ru.edu.repo.UserRepository;
 
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserSite user = userRepository.findByUsername(username);
+        UserEntity user =  userRepository.findByUsername(username);
         if (user == null) {
             throw new UsernameNotFoundException(username);
         }
@@ -47,8 +47,8 @@ public class UserService implements UserDetailsService {
     }
 
 
-    public boolean saveUser(UserSite user) {
-        UserSite newUser = userRepository.findByUsername(user.getUsername());
+    public boolean saveUser(UserEntity user) {
+        UserEntity newUser = userRepository.findByUsername(user.getUsername());
         if (newUser != null) {
             return false;
         }
@@ -62,11 +62,7 @@ public class UserService implements UserDetailsService {
         return true;
     }
 
-    public void updateUser(UserSite user) {
-        int age=user.getAge();
-        if(age>120||age<1){
-            //todo //
-        }
+    public void updateUser(UserEntity user) {
         try {
             userRepository.save(user);
         } catch (Exception e) {
@@ -75,20 +71,20 @@ public class UserService implements UserDetailsService {
         }
     }
 
-    public UserSite findByUsername(String username) {
+    public UserEntity findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
-    public UserSite findById(long id){return userRepository.findById(id);}
+    public UserEntity findById(long id){return userRepository.findById(id);}
 
-    public List<UserSite> findAllUserByRoleUser() {
+    public List<UserEntity> findAllUserByRoleUser() {
         return userRepository.findByRole("USER");
     }
-    public List<UserSite> findAllUserByRoleBlocked() {
+    public List<UserEntity> findAllUserByRoleBlocked() {
         return userRepository.findByRole("BLOCKED");
     }
     public void changeRole(String newRole,long id){
-        UserSite user=findById(id);
-       if(user==null){
+        UserEntity user=findById(id);
+       if(user==null||user.getRole().contains("ADMIN")){
            throw new RuntimeException("user not found");
        }
         user.setRole(newRole);
@@ -97,7 +93,7 @@ public class UserService implements UserDetailsService {
 
     public String generateLogin(String login) {
 
-        UserSite newUser = userRepository.findByUsername(login);
+        UserEntity newUser = userRepository.findByUsername(login);
         String newLogin = login;
         while (newUser != null) {
             newLogin = login + (int) Math.floor(Math.random() * 101);

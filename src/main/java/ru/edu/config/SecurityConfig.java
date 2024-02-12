@@ -22,7 +22,7 @@ public class SecurityConfig {
 
                     "/",
                     "/api/create",
-                    "/register",
+                    "/registration",
                     "/create/account",
                     "/help",
                     "/helpEU",

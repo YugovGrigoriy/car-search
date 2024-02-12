@@ -8,17 +8,17 @@
 </head>
 <body>
 <div class="login-container">
-    <h3>Fill in your information</h3>
+    <h3 th:text="${NotAvailableAge}">Fill in your information</h3>
     <form th:action="@{/api/user/me}" method="post">
         <input type="hidden" name="username" th:value="${username}"/>
         <label>
-          Name:  <input type="text" name="name" class="form-input" placeholder="your name" required>
+            Name: <input type="text" name="name" class="form-input" placeholder="your name" required>
         </label>
         <label>
-          Age:  <input type="number" name="age" class="form-input" placeholder="your age" required>
+            Age: <input type="number" name="age" class="form-input" placeholder="your age" required>
         </label>
         <button type="submit" class="submit-button">go to sign in</button>
     </form>
-    </div>
+</div>
 </body>
 </html>

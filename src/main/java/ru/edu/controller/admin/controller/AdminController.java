@@ -1,7 +1,5 @@
 package ru.edu.controller.admin.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,10 +7,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.edu.entity.CarEntity;
-import ru.edu.entity.UserSite;
+import ru.edu.entity.ReportEntity;
+import ru.edu.entity.UserEntity;
 import ru.edu.service.CarService;
 import ru.edu.service.ReportService;
 import ru.edu.service.UserService;
+import ru.edu.utils.AdminUtils;
+
+
 import java.util.List;
 
 
@@ -22,7 +24,7 @@ public class AdminController {
     private UserService userService;
     private CarService carService;
     private ReportService reportService;
-    private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
+
 
     public AdminController() {
     }
@@ -36,30 +38,29 @@ public class AdminController {
 
     @GetMapping(value = "/admin-dashboard")
     public String adminPanel(Model model) {
-        List<UserSite> listUser;
-        listUser = userService.findAllUserByRoleUser();
-        model.addAttribute("userList", listUser);
+        List<UserEntity> allUsers=userService.findAllUserByRoleUser();
+        model.addAttribute("userList", AdminUtils.getListUser(allUsers));
         return "admin-panel";
     }
 
     @GetMapping(value = "/user-report")
     public String userReport(Model model) {
-        List<String>userReport=reportService.getAllReports();
-        model.addAttribute("user_reports", userReport);
+        List<ReportEntity>userReport=reportService.findAll();
+        model.addAttribute("user_reports", AdminUtils.getListReport(userReport));
         return "user-report";
     }
 
     @GetMapping(value = "/blocked-user")
     public String blockedUser(Model model) {
-        List<UserSite> users = userService.findAllUserByRoleBlocked();
-        model.addAttribute("userList", users);
+        List<UserEntity> users = userService.findAllUserByRoleBlocked();
+        model.addAttribute("userList", AdminUtils.getListUser(users));
         return "blocked-user";
     }
 
     @GetMapping(value = "/all-car")
     public String getAllCar(Model model) {
         List<CarEntity> cars = carService.findAllCar();
-        model.addAttribute("carList", cars);
+        model.addAttribute("carList", AdminUtils.getListCar(cars) );
         return "all-cars";
     }
 

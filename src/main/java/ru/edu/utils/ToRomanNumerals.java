@@ -5,6 +5,10 @@ public class ToRomanNumerals {
      *Converting Arabic numerals to Roman numerals
      */
     public static String toRoman(int number){
+
+        if(number<1||number>3999){
+            return "";
+        }
         String[] thousands = {"", "M", "MM", "MMM"};
         String[] hundreds = {"", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM"};
         String[] tens = {"", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC"};

@@ -24,12 +24,13 @@
         ID User:
         <input type="number" name="ID" required>
         <button class="admin-button admin-button-unblock">Unblock</button>
-
     </label>
-    </form>
-    <p th:text="${err}"></p>
-    <div id="user-list-container">
+        <p th:text="${err}"></p>
 
+    </form>
+
+    <div id="user-list-container">
+<h3>Blocked users:</h3>
         <ul th:each="user : ${userList}">
             <li th:text="${user}"></li>
         </ul>

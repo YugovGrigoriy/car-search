@@ -1,22 +1,19 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     let checkboxes = document.querySelectorAll('input[type="checkbox"]');
     let compareButton = document.getElementById('compareButton');
     let selectedCounter = 0;
 
-    checkboxes.forEach(function(checkbox) {
-        checkbox.addEventListener('change', function() {
+    checkboxes.forEach(function (checkbox) {
+        checkbox.addEventListener('change', function () {
             if (this.checked) {
                 selectedCounter++;
             } else {
                 selectedCounter--;
             }
-
-            compareButton.disabled = selectedCounter !== 2;
-            compareButton.classList.toggle('disabled', selectedCounter !== 2);
         });
     });
 
-    compareButton.addEventListener('click', function(event) {
+    compareButton.addEventListener('click', function (event) {
         if (selectedCounter !== 2) {
             event.preventDefault();
             alert('Please select exactly 2 cars for comparison.');
