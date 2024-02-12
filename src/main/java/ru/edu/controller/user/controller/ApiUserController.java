@@ -7,12 +7,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.edu.entity.ReportEntity;
-import ru.edu.entity.UserSite;
+import ru.edu.entity.UserEntity;
 import ru.edu.service.ReportService;
 import ru.edu.service.UserService;
 
@@ -38,31 +38,37 @@ public class ApiUserController {
     }
 
     private static final Logger logger = LoggerFactory.getLogger(ApiUserController.class);
-    //logger.info("trying to register with an existing login: "+username);
+
 
     @PostMapping("/create")
-    public String signUpForm(@ModelAttribute UserSite user) {
+    public String signUpForm(@ModelAttribute UserEntity user) {
 
         if (userService.saveUser(user)) {
-            logger.info("user:" + user.getUsername() + " successfully registered");
-            String userName = user.getUsername();
-            return "redirect:/create/account?userName=" + userName;
+            logger.info(String.format("user:%s successfully registered",user.getUsername()));
+            String username = user.getUsername();
+            return "redirect:/create/account?userName=" + username;
         } else {
             String newUsername = userService.generateLogin(user.getUsername());
-            return "redirect:/register?registrationStatus=failed&newUsername=" + newUsername;
+            return "redirect:/registration?registrationStatus=failed&newUsername=" + newUsername;
         }
     }
 
     @PostMapping("/user/me")
     public String fillPersonDate(@RequestParam("username") String userName,
                                  @RequestParam("age") int age,
-                                 @RequestParam("name") String name) {
+                                 @RequestParam("name") String name,
+                                 Model model) {
 
-        UserSite currentUser = userService.findByUsername(userName);
+        UserEntity currentUser = userService.findByUsername(userName);
+        if(age>100||age<1){
+            model.addAttribute("NotAvailableAge","Age cannot be less than 0 or greater than 100");
+            model.addAttribute("username",userName);
+            return "personal-data";
+        }
         currentUser.setName(name);
         currentUser.setAge(age);
         userService.updateUser(currentUser);
-        logger.info("this user update name:" + name + " age:" + age);
+        logger.info(String.format("%s  update name:%s age:%s",userName,name,age));
         return "redirect:/login";
 
     }

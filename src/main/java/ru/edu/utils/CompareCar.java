@@ -3,6 +3,7 @@ package ru.edu.utils;
 
 import ru.edu.entity.CarEntity;
 
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -103,24 +104,18 @@ public class CompareCar {
      */
     public static CarEntity compareSpeed(CarEntity car1, CarEntity car2) {
         if(car1.getMaximumSpeed().equals("0")||car2.getMaximumSpeed().equals("0")){
-            CarEntity car=new CarEntity();
-            car.setMaximumSpeed("car speed cannot be 0");
-            return car;
-        }
+            throw new InvalidParameterException("car speed cannot be 0");
+         }
         int speedCar1 = Integer.parseInt(car1.getMaximumSpeed());
         int speedCar2 = Integer.parseInt(car2.getMaximumSpeed());
         if(speedCar1<1){
-            car1.setMaximumSpeed("The speed of the car cannot be negative, comparison is impossible!");
-            return car1;
+            throw new InvalidParameterException("The speed of the car cannot be negative, comparison is impossible!");
         }
         if(speedCar2<1){
-            car2.setMaximumSpeed("The speed of the car cannot be negative, comparison is impossible!");
-            return car2;
+            throw new InvalidParameterException("The speed of the car cannot be negative, comparison is impossible!");
         }
         if(speedCar1==speedCar2){
-            CarEntity car=new CarEntity();
-            car.setMaximumSpeed("the cars speed is the same");
-            return car;
+            return null;
         }
         if (speedCar1 < speedCar2) {
             return car2;
@@ -133,24 +128,18 @@ public class CompareCar {
      */
     public static CarEntity comparePrice(CarEntity car1, CarEntity car2) {
         if(car1.getPrice().equals("0")||car2.getPrice().equals("0")){
-            CarEntity car=new CarEntity();
-            car.setPrice("car price cannot be equal to 0");
-            return car;
-        }
+            throw new InvalidParameterException("car price cannot be equal to 0");
+          }
         int priceCar1 = Integer.parseInt(car1.getPrice());
         int priceCar2 = Integer.parseInt(car2.getPrice());
         if(priceCar1<0){
-            car1.setPrice("The price of the car cannot be negative, comparison is impossible!");
-            return car1;
-        }
+            throw new InvalidParameterException("The price of the car cannot be negative, comparison is impossible!");
+         }
         if(priceCar2<0){
-            car2.setPrice("The price of the car cannot be negative, comparison is impossible!");
-            return car2;
-        }
+            throw new InvalidParameterException("The price of the car cannot be negative, comparison is impossible!");
+          }
         if(priceCar1==priceCar2){
-            CarEntity car=new CarEntity();
-            car.setPrice("cars prices are the same");
-            return car;
+            return null;
         }
         if (priceCar1 < priceCar2) {
             return car2;
@@ -163,24 +152,18 @@ public class CompareCar {
      */
     public static CarEntity compareFullMass(CarEntity car1, CarEntity car2) {
         if(car1.getFullMass().equals("0")||car2.getFullMass().equals("0")){
-            CarEntity car=new CarEntity();
-            car.setFullMass("the mass of the car cannot be equal to 0");
-            return car;
-        }
+          throw new InvalidParameterException("the mass of the car cannot be equal to 0");
+         }
         int fullMassCar1 = Integer.parseInt(car1.getFullMass());
         int fullMassCar2 = Integer.parseInt(car2.getFullMass());
         if(fullMassCar1<0){
-            car1.setFullMass("The mass of the car cannot be negative, comparison is not possible!");
-            return car1;
-        }
+            throw new InvalidParameterException("The mass of the car cannot be negative, comparison is not possible!");
+         }
         if(0>fullMassCar2){
-            car2.setFullMass("The mass of the car cannot be negative, comparison is not possible!");
-            return car2;
-        }
+            throw new InvalidParameterException("The mass of the car cannot be negative, comparison is not possible!");
+         }
         if(fullMassCar1==fullMassCar2){
-            CarEntity car=new CarEntity();
-            car.setFullMass("the mass of the cars is the same");
-            return car;
+            return null;
         }
         if (fullMassCar1 < fullMassCar2) {
             return car2;

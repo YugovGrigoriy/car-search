@@ -2,15 +2,15 @@ package ru.edu.controller.car.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.edu.entity.CarEntity;
-import ru.edu.entity.UserSite;
+import ru.edu.entity.UserEntity;
 import ru.edu.service.CarService;
 import ru.edu.service.UserService;
 import ru.edu.utils.CompareCar;
@@ -75,10 +75,9 @@ public class CarController {
     @GetMapping(value = "/compare")
     public String compare(@RequestParam("position1") String carForComparison1,
                           @RequestParam("position2") String carForComparison2,
-                          Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-        UserSite user = userService.findByUsername(username);
+                          Model model,@AuthenticationPrincipal UserDetails principal) {
+        String username = principal.getUsername();
+        UserEntity user = userService.findByUsername(username);
         String idCar1=StringFormatter.extractIdFromDescription(carForComparison1);
         String idCar2=StringFormatter.extractIdFromDescription(carForComparison2);
         CarEntity car1 = carService.findCar(idCar1);

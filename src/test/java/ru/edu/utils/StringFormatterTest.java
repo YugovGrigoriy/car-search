@@ -13,12 +13,14 @@ public class StringFormatterTest {
         String result3=StringFormatter.capitalizeFirstLetter("Hello6");
         String result4=StringFormatter.capitalizeFirstLetter("hello6");
         String result5=StringFormatter.capitalizeFirstLetter("hello world");
+        String result6=StringFormatter.capitalizeFirstLetter(null);
 
-        Assertions.assertEquals(result1,"-change is not possible");
-        Assertions.assertEquals(result2,"6Hello-change is not possible");
+        Assertions.assertEquals(result1,"");
+        Assertions.assertEquals(result2,"");
         Assertions.assertEquals(result3,"Hello6");
         Assertions.assertEquals(result4,"Hello6");
         Assertions.assertEquals(result5,"Hello world");
+        Assertions.assertEquals(result6,"");
     }
 
     @Test
