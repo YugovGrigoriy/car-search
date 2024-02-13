@@ -17,10 +17,13 @@ import ru.edu.service.ReportService;
 import ru.edu.service.UserService;
 
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 @Controller
+
 @RequestMapping(value = "/api", consumes = MediaType.ALL_VALUE)
 public class ApiUserController {
 
@@ -42,9 +45,13 @@ public class ApiUserController {
 
     @PostMapping("/create")
     public String signUpForm(@ModelAttribute UserEntity user) {
+        if (user.getUsername() == null) {
+            logger.info("user not initialized, unknown error, time:+" + new Date());
+            return "redirect:/registration";
+        }
 
         if (userService.saveUser(user)) {
-            logger.info(String.format("user:%s successfully registered",user.getUsername()));
+            logger.info(String.format("user:%s successfully registered", user.getUsername()));
             String username = user.getUsername();
             return "redirect:/create/account?userName=" + username;
         } else {
@@ -58,17 +65,20 @@ public class ApiUserController {
                                  @RequestParam("age") int age,
                                  @RequestParam("name") String name,
                                  Model model) {
-
+        if (userName == null||userName.isEmpty()) {
+            logger.info("user not initialized, unknown error, time:+" + new Date());
+            return "redirect:/login";
+        }
         UserEntity currentUser = userService.findByUsername(userName);
-        if(age>100||age<1){
-            model.addAttribute("NotAvailableAge","Age cannot be less than 0 or greater than 100");
-            model.addAttribute("username",userName);
+        if (age > 100 || age < 1) {
+            model.addAttribute("NotAvailableAge", "Age cannot be less than 0 or greater than 100");
+            model.addAttribute("username", userName);
             return "personal-data";
         }
         currentUser.setName(name);
         currentUser.setAge(age);
         userService.updateUser(currentUser);
-        logger.info(String.format("%s  update name:%s age:%s",userName,name,age));
+        logger.info(String.format("%s update name:%s age:%s", userName, name, age));
         return "redirect:/login";
 
     }
@@ -80,13 +90,13 @@ public class ApiUserController {
         LocalDateTime currentDateTime = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String formattedDateTime = currentDateTime.format(formatter);
-        if (name == null) {
+        if (name == null||name.isEmpty()) {
             name = "default name";
         }
-        if (message == null) {
+        if (message == null||message.isEmpty()) {
             return "redirect:/";
         }
-        if (email == null) {
+        if (email == null||email.isEmpty()) {
             email = "email was not provided";
         }
         ReportEntity report = new ReportEntity(formattedDateTime, name, message, email);

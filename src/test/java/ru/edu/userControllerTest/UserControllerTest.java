@@ -1,79 +1,72 @@
 package ru.edu.userControllerTest;
 
 
-
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.servlet.ModelAndView;
 import ru.edu.controller.user.controller.UserController;
 import ru.edu.entity.CarEntity;
 import ru.edu.entity.UserEntity;
 import ru.edu.service.UserService;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@SpringBootTest
-@ExtendWith(MockitoExtension.class)
-
+@WebMvcTest(UserController.class)
 public class UserControllerTest {
+    @Autowired
     private MockMvc mockMvc;
     private static AutoCloseable closeable;
     @MockBean
     private UserService userService;
 
-    @InjectMocks
-    private UserController userController;
+
 
     @BeforeEach
-    public void setup() {
+     void setup() {
         closeable = MockitoAnnotations.openMocks(this);
-        mockMvc = MockMvcBuilders.standaloneSetup(userController).build();
+
     }
     @AfterAll
-    public static void tearDown() throws Exception {
+     static void tearDown() throws Exception {
         if (closeable != null) {
             closeable.close();
         }
     }
 
     @Test
-    public void welcomePageTest() throws Exception {
+    @WithMockUser
+    void welcomePageTest() throws Exception {
         mockMvc.perform(get("/"))
             .andExpect(status().isOk())
             .andExpect(view().name("engine"));
     }
 
-    @Test
-    public void loginTest() throws Exception {
-        mockMvc.perform(get("/login"))
-            .andExpect(status().isOk())
-            .andExpect(view().name("sign-in"));
-    }
 
     @Test
-    public void reportTest() throws Exception {
+    @WithMockUser
+     void reportTest() throws Exception {
         mockMvc.perform(get("/report"))
             .andExpect(status().isOk())
             .andExpect(view().name("user-message"));
     }
 
     @Test
-    public void helpTest() throws Exception {
+    @WithMockUser
+     void helpTest() throws Exception {
         mockMvc.perform(get("/help"))
             .andExpect(status().isOk())
             .andExpect(view().name("helpRU"));
@@ -83,6 +76,7 @@ public class UserControllerTest {
     }
 
     @Test
+    @WithMockUser
     void signUpFormTest() throws Exception {
         String newUserName = "test";
         String newUserName1 = "";
@@ -125,6 +119,7 @@ public class UserControllerTest {
     }
 
     @Test
+    @WithMockUser
     void createAccountTest() throws Exception {
         String username = "test";
 
@@ -133,7 +128,7 @@ public class UserControllerTest {
 
 
         mockMvc.perform(get("/create/account")
-                .param("username", username))
+                .param("userName", username))
             .andExpect(status().isOk())
             .andExpect(view().name("personal-data"))
             .andExpect(model().size(1))

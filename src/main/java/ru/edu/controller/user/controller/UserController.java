@@ -5,9 +5,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import ru.edu.entity.CarEntity;
 import ru.edu.entity.UserEntity;
 import ru.edu.service.UserService;
@@ -56,7 +54,7 @@ public class UserController {
 
     @GetMapping("/create/account")//todo переименовать
     public String createAccount(Model model,
-                                @RequestParam("username") String userName) {
+                                @RequestParam String userName) {
         model.addAttribute("username", userName);
         return "personal-data";
     }
