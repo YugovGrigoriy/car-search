@@ -45,8 +45,9 @@ public class CarController {
         String newCarModel = carModel.substring(carModel.indexOf(" ") + 1).toLowerCase();
         CarEntity car = carService.findCar(newCarModel, vehicleGeneration);
         if (car == null) {
-            model.addAttribute("error", "Error: Ford " + "\"" + carModel + " " + vehicleGeneration + "\"" + " nothing was found," +
-                " perhaps you were mistaken or we have not yet managed to add this car");
+            model.addAttribute("error", String.format("Error: \"%s %s \" nothing was found, perhaps you were mistaken or we have not yet managed to add this car",
+                carModel,
+                vehicleGeneration));
             return "engine";
         }
         String brand = StringFormatter.capitalizeFirstLetter(car.getBrand());
