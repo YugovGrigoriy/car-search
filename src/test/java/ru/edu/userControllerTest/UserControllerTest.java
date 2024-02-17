@@ -1,11 +1,8 @@
 package ru.edu.userControllerTest;
 
 
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -29,23 +26,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class UserControllerTest {
     @Autowired
     private MockMvc mockMvc;
-    private static AutoCloseable closeable;
+
     @MockBean
     private UserService userService;
 
-
-
-    @BeforeEach
-     void setup() {
-        closeable = MockitoAnnotations.openMocks(this);
-
-    }
-    @AfterAll
-     static void tearDown() throws Exception {
-        if (closeable != null) {
-            closeable.close();
-        }
-    }
 
     @Test
     @WithMockUser
@@ -58,7 +42,7 @@ public class UserControllerTest {
 
     @Test
     @WithMockUser
-     void reportTest() throws Exception {
+    void reportTest() throws Exception {
         mockMvc.perform(get("/report"))
             .andExpect(status().isOk())
             .andExpect(view().name("user-message"));
@@ -66,7 +50,7 @@ public class UserControllerTest {
 
     @Test
     @WithMockUser
-     void helpTest() throws Exception {
+    void helpTest() throws Exception {
         mockMvc.perform(get("/help"))
             .andExpect(status().isOk())
             .andExpect(view().name("helpRU"));

@@ -72,6 +72,7 @@ public class UserService implements UserDetailsService {
     }
 
     public UserEntity findByUsername(String username) {
+
         return userRepository.findByUsername(username);
     }
     public UserEntity findById(long id){return userRepository.findById(id);}

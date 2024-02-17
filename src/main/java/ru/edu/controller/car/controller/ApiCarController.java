@@ -5,7 +5,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,13 +38,14 @@ public class ApiCarController {
     }
 
     @PostMapping(value = "/add/favorite")
-    public String addFavoriteCar(@RequestParam(value = "idCar") String carId,
-                                 @AuthenticationPrincipal UserDetails principal) {
-        if (carId == null) {
-            logger.info(String.format("Unknown error carId==null |%s|%s|",principal.getUsername(),principal.getAuthorities()));
+    public String addFavoriteCar(@RequestParam(value = "idCar") String carId) {
+        if (carId.isEmpty()) {
+            logger.info("Unknown error carId==null");
+            return "redirect:/";
         }
 
-        String username = principal.getUsername();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
         UserEntity user = userService.findByUsername(username);
         List<CarEntity> favoriteCars = user.getFavoriteCars();
         favoriteCars.add(carService.findCar(carId));
@@ -51,8 +54,9 @@ public class ApiCarController {
     }
 
     @PostMapping(value = "/clear")
-    public String clear(@AuthenticationPrincipal UserDetails principal) {
-        String username = principal.getUsername();
+    public String clear() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
         UserEntity user = userService.findByUsername(username);
         user.setFavoriteCars(new ArrayList<>());
         userService.updateUser(user);

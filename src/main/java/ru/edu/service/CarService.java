@@ -23,6 +23,7 @@ public class CarService {
         return repository.findByModelAndVehicleGeneration(model,vehicleGeneration);
     }
     public CarEntity findCar(String id){
+
         return repository.findCarById(Long.parseLong(id));
     }
     public List<CarEntity>findAllCar(){

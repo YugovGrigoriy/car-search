@@ -1,0 +1,24 @@
+services:
+  postgres:
+    image: "postgres"
+    environment:
+      POSTGRES_PASSWORD: "123"
+    ports:
+      - "5543:5432"
+    networks:
+      - bridge
+  automotive:
+    image: "automotive"
+    environment:
+      DATABASE_URL: "jdbc:postgresql://automotive-project-postgres-1:5432/postgres"
+      DATABASE_USER: "postgres"
+      DATABASE_PW: "123"
+    ports:
+      - "8085:8080"
+    depends_on:
+      - postgres
+    networks:
+      - bridge
+networks:
+  bridge:
+    driver: bridge

@@ -2,7 +2,9 @@ package ru.edu.controller.car.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -76,8 +78,12 @@ public class CarController {
     @GetMapping(value = "/compare")
     public String compare(@RequestParam("position1") String carForComparison1,
                           @RequestParam("position2") String carForComparison2,
-                          Model model,@AuthenticationPrincipal UserDetails principal) {
-        String username = principal.getUsername();
+                          Model model) {
+        if(carForComparison1.isEmpty()||carForComparison2.isEmpty()){
+            return "personal-area";
+        }
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
         UserEntity user = userService.findByUsername(username);
         String idCar1=StringFormatter.extractIdFromDescription(carForComparison1);
         String idCar2=StringFormatter.extractIdFromDescription(carForComparison2);
