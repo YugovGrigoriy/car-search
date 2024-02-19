@@ -1,7 +1,6 @@
 package ru.edu.carControllerTest;
 
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -35,7 +34,7 @@ public class CarControllerTest {
     @Test
     @WithMockUser
     void findCarTest() throws Exception {
-        CarEntity car = new CarEntity(1L, "Test", "Test-Model", "1", "1", "100", "10", "2", "150", "1500", "C");
+        CarEntity car = new CarEntity(1L, "Test", "Test-Model", "1", "1", "100", "10", "150", "1500", "C");
         when(carService.findCar(anyString(), anyString())).thenReturn(car);
         mockMvc.perform(get("/car/find").param("model", "")
                 .param("vehicleGeneration", ""))
@@ -54,8 +53,8 @@ public class CarControllerTest {
                 .param("vehicleGeneration", "1"))
             .andExpect(status().isOk())
             .andExpect(model().size(10))
-            .andExpect(model().attribute("price", "Price: 100$"))
-            .andExpect(model().attribute("model", "Test Test-model"))
+            .andExpect(model().attribute("price", "Price: 1$"))
+            .andExpect(model().attribute("model", "Test Test-model I"))
             .andExpect(view().name("engine"));
     }
 
@@ -64,8 +63,8 @@ public class CarControllerTest {
     void compareTest() throws Exception {
         UserEntity user = new UserEntity(1, "testUser", "test", 1, "", "USER", new ArrayList<>());
         when(userService.findByUsername("testUser")).thenReturn(user);
-        CarEntity car = new CarEntity(1L, "Test", "Test-Model", "1", "1", "100", "10", "2", "150", "1500", "C");
-        CarEntity car1 = new CarEntity(2L, "Test1", "Test-Model1", "11", "11", "1001", "101", "21", "1501", "15001", "D");
+        CarEntity car = new CarEntity(1L, "Test", "Test-Model", "1", "1", "100", "10", "150", "1500", "C");
+        CarEntity car1 = new CarEntity(2L, "Test1", "Test-Model1", "11", "11", "1001", "101",  "1501", "15001", "D");
         when(carService.findCar("1")).thenReturn(car);
         when(carService.findCar("2")).thenReturn(car1);
 

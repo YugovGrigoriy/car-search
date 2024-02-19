@@ -45,7 +45,6 @@ public class AdminUtilsTest {
         car.setPower("1");
         car.setId(1L);
         car.setEngineCapacity("1");
-        car.setPictureNumber("1");
         List<CarEntity> test = new ArrayList<>();
         test.add(car);
         List<String> result = AdminUtils.getListCar(test);

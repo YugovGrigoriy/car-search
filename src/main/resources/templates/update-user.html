@@ -9,15 +9,14 @@
 <body>
 <div class="login-container">
     <h3 th:text="${NotAvailableAge}">Fill in your information</h3>
-    <form th:action="@{/api/user/me}" method="post">
-        <input type="hidden" name="username" th:value="${username}"/>
+    <form th:action="@{/api/update-user}" method="post">
         <label>
             Name: <input type="text" name="name" class="form-input" placeholder="your name" required>
         </label>
         <label>
            Age: <input type="number" name="age" class="form-input" placeholder="your age" required min="1" max="100000">
         </label>
-        <button type="submit" class="submit-button">go to sign in</button>
+        <button type="submit" class="submit-button">change</button>
     </form>
 </div>
 </body>

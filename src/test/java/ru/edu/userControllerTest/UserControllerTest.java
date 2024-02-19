@@ -157,7 +157,6 @@ public class UserControllerTest {
         car.setBrand("Test-Brand");
         car.setModel("Test-Model");
         car.setVehicleGeneration("1");
-        car.setPictureNumber("1");
         car.setPrice("100");
         car.setPower("200");
         car.setEngineCapacity("100");
@@ -170,7 +169,6 @@ public class UserControllerTest {
         car1.setBrand("Test-Brand1");
         car1.setModel("Test-Model1");
         car1.setVehicleGeneration("2");
-        car1.setPictureNumber("2");
         car1.setPrice("200");
         car1.setPower("300");
         car1.setEngineCapacity("200");

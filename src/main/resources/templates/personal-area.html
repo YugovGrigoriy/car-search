@@ -27,7 +27,14 @@
         <div class="user-info">
             <h2>Age</h2>
             <p th:text="${age}"></p>
-        </div>
+         </div>
+     </div>
+    <div class="button-container">
+        <form th:action="@{/change-user-information}" method="get">
+            <button class="logout-button">Change</button>
+        </form>
+    </div>
+    <div class="button-container">
         <form th:action="@{/api/logout}" method="get">
             <button class="logout-button">Logout</button>
         </form>

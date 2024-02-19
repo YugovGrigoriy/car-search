@@ -19,14 +19,12 @@ import ru.edu.service.UserService;
 
 import java.util.ArrayList;
 
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.anonymous;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 @WebMvcTest({ApiCarController.class})
@@ -60,7 +58,7 @@ public class ApiCarControllerTest {
     @WithMockUser("testUser")
     void addFavoriteCarTest() throws Exception {
         UserEntity user = new UserEntity(1, "testUser", "test", 1, "", "USER", new ArrayList<>());
-        CarEntity car = new CarEntity(1L, "Test", "Test-Model", "1", "1", "100", "10", "2", "150", "1500", "C");
+        CarEntity car = new CarEntity(1L, "Test", "Test-Model", "1", "1", "100", "10", "150", "1500", "C");
         when(userService.findByUsername("testUser")).thenReturn(user);
         doNothing().when(userService).updateUser(any(UserEntity.class));
         when(carService.findCar(anyString())).thenReturn(car);

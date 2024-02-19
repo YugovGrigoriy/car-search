@@ -1,8 +1,13 @@
 package ru.edu.utils;
-
+/**
+ * The ToRomanNumerals class provides a utility method to convert an integer to a Roman numeral representation.
+ */
 public class ToRomanNumerals {
     /**
-     *Converting Arabic numerals to Roman numerals
+     * Converts an integer to a Roman numeral representation.
+     *
+     * @param number The integer to convert to a Roman numeral.
+     * @return The Roman numeral representation of the input integer as a string.
      */
     public static String toRoman(int number){
 

@@ -20,11 +20,19 @@ public class ReportService {
     public ReportService(ReportRepository repository) {
         this.repository = repository;
     }
-
+    /**
+     * Saves a report entity to bd.
+     *
+     * @param report The report entity to save.
+     */
     public void save(ReportEntity report) {
         repository.save(report);
     }
-
+    /**
+     * Retrieves a list of all reports.
+     *
+     * @return A list of all ReportEntity objects.
+     */
     public List<ReportEntity> findAll() {
         return repository.findAll();
     }
