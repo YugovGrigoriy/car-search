@@ -4,9 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.edu.entity.ReportEntity;
 import ru.edu.repo.ReportRepository;
-import ru.edu.utils.AdminUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service

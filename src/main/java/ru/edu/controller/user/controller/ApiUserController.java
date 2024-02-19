@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +16,6 @@ import ru.edu.entity.ReportEntity;
 import ru.edu.entity.UserEntity;
 import ru.edu.service.ReportService;
 import ru.edu.service.UserService;
-
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
