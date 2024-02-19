@@ -189,3 +189,11 @@ footer {
     cursor: pointer;
     border-radius: 4px;
 }
+.button-container {
+    text-align: center;
+}
+
+.button-container form {
+    display: block;
+    margin-bottom: 10px;
+}

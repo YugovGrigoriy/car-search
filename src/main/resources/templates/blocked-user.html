@@ -15,14 +15,14 @@
     <form th:action="@{/admin/api/add-user/blockList}" method="post">
         <label>
             ID User:
-            <input type="number" name="ID" required>
+            <input type="number" name="ID" required max="100000">
             <button class="admin-button admin-button-block">Block</button>
         </label>
     </form>
     <form th:action="@{/admin/api/add-user/unBlock}" method="post">
     <label>
         ID User:
-        <input type="number" name="ID" required>
+        <input type="number" name="ID" required max="100000">
         <button class="admin-button admin-button-unblock">Unblock</button>
     </label>
         <p th:text="${err}"></p>

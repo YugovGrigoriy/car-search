@@ -63,11 +63,11 @@
     <form th:action="@{/admin/api/update-car-price}" method="POST">
         <div class="form-group">
             <label for="carId">ID car:</label>
-            <input type="number" id="carId" name="carId" required>
+            <input type="number" id="carId" name="carId" required max="10000000">
         </div>
         <div class="form-group">
             <label for="newPrice">New price:</label>
-            <input type="number" id="newPrice" name="newPrice" required>
+            <input type="number" id="newPrice" name="newPrice" required max="100000000">
         </div>
         <button type="submit" class="btn">update</button>
     </form>

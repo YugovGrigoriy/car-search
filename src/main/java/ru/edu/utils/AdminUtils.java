@@ -7,9 +7,16 @@ import ru.edu.entity.UserEntity;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * The AdminUtils class provides utility methods for generating formatted lists of users, reports, and cars.
+ */
 public class AdminUtils {
-
+    /**
+     * Generates a list of formatted user information.
+     *
+     * @param users The list of UserEntity objects.
+     * @return A list of formatted user information strings.
+     */
     public static List<String>getListUser(List<UserEntity>users){
         List<String>listUsers=new ArrayList<>();
         if(users.isEmpty()){
@@ -23,6 +30,12 @@ public class AdminUtils {
         }
         return listUsers;
     }
+    /**
+     * Generates a list of formatted report information.
+     *
+     * @param reports The list of ReportEntity objects.
+     * @return A list of formatted report information strings.
+     */
     public static List<String>getListReport(List<ReportEntity>reports) {
         List<String> listReports = new ArrayList<>();
         for (int i = 0; i < reports.size(); i++) {
@@ -38,6 +51,13 @@ public class AdminUtils {
         }
         return listReports;
     }
+    /**
+     * Generates a list of formatted car information.
+     *
+     * @param cars The list of CarEntity objects.
+     * @return A list of formatted car information strings.
+     * @throws InvalidParameterException if the car is empty.
+     */
     public static List<String>getListCar(List<CarEntity>cars){
         List<String>listCar=new ArrayList<>();
         if(cars.isEmpty()){

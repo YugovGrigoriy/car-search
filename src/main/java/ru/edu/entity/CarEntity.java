@@ -1,7 +1,10 @@
 package ru.edu.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @Entity
@@ -21,8 +24,6 @@ public class CarEntity {
     @Column
     private String vehicleGeneration;
     @Column
-    private String pictureNumber;
-    @Column
     private String price;
     @Column
     private String power;
@@ -35,8 +36,13 @@ public class CarEntity {
     @Column
     private String carClass;
 
+    /**
+     * Checks if the car entity is empty by checking if all fields are null.
+     *
+     * @return true if all fields are null, false otherwise.
+     */
     public boolean carIsEmpty(){
-        return this.brand == null && this.model == null && this.vehicleGeneration == null && this.pictureNumber == null
+        return this.brand == null && this.model == null && this.vehicleGeneration == null
             && this.price == null && this.power == null && this.engineCapacity == null &&
             this.maximumSpeed == null && this.fullMass == null && this.carClass == null;
     }

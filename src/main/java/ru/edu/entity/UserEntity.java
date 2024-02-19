@@ -31,7 +31,7 @@ public class UserEntity {
 
     @Column(nullable = false)
     private String role = "USER";
-    @OneToMany
+    @ManyToMany
     @CollectionTable(name = "favorite_cars", joinColumns = @JoinColumn(name = "user_id"))
     private List<CarEntity> favoriteCars = new ArrayList<>();
 }
